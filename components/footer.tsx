@@ -41,6 +41,9 @@ export default function Footer() {
               <a href="#community" className="block text-yellow-100 hover:text-white transition-colors">
                 Join Community
               </a>
+              <a href="/policies.html" className="block text-yellow-100 hover:text-white transition-colors">
+                Policies
+              </a>
             </div>
           </div>
 
