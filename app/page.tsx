@@ -2768,9 +2768,17 @@ export default function Page() {
 
 <footer className="bg-gray-900 text-white py-8">
   <div className="container mx-auto px-4 text-center">
-    <p className="text-sm">
+    <p className="text-sm mb-2">
       &copy; {new Date().getFullYear()} Chrizeecry Collective. All rights reserved.
     </p>
+    <a
+      href="/policies.html"
+      className="text-yellow-300 underline hover:text-yellow-400 transition-colors text-sm"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Policies
+    </a>
   </div>
 </footer>
 </div>
