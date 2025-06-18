@@ -17,6 +17,7 @@ import {
   ExternalLink,
   MessageCircle,
 } from "lucide-react"
+import Footer from "@/components/footer";
 
 // fix the syntax
 
@@ -1199,7 +1200,10 @@ export default function Page() {
       {/* Community Impact & Mentorship Legacy */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center space-y-6 mb-16">
+
+      {/* ...rest of the page... */}
+
+                <div className="text-center space-y-6 mb-16">
             <Badge className="bg-blue-600 text-white px-4 py-2 text-sm font-semibold">🌱 Community Impact</Badge>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900">The Circle of Support</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -1351,7 +1355,7 @@ export default function Page() {
                     But the friendships and memories we made there are very real. Wish y'all could ride that road 
                     with the same pride we built it with."
                   </blockquote>
-                </div>
+                                  </div>
               </div>
             </div>
           </div>
@@ -1393,7 +1397,7 @@ export default function Page() {
                     that someone from their community, someone who faced challenges and setbacks, could still achieve 
                     their goals and return to uplift others.
                   </p>
-                  <p className="text-gray-700 leading-relaxed font-semibold text-purple-800">
+                  <p className="text-gray-700 leading-relaxed font-semibold">
                     "Every line I drew on that board was a testament to persistence. Every student who understood a 
                     concept was proof that knowledge, when shared with love and patience, multiplies exponentially."
                   </p>
@@ -1449,7 +1453,7 @@ export default function Page() {
                     with me during those long nights, who explained concepts when I was confused, who celebrated 
                     small victories and supported me through setbacks—they were integral to my success.
                   </p>
-                  <p className="text-gray-700 leading-relaxed font-semibold text-gray-800">
+                  <p className="text-gray-700 leading-relaxed font-semibold">
                     "In that quiet study space, surrounded by laptops and engineering textbooks, we weren't just 
                     learning formulas—we were building the foundation for lifelong friendships and professional networks."
                   </p>
@@ -1475,7 +1479,7 @@ export default function Page() {
                     audience engagement, and content creation—skills that would later become central to my success 
                     as an educational content creator.
                   </p>
-                  <p className="text-gray-700 leading-relaxed font-semibold text-pink-800">
+                  <p className="text-gray-700 leading-relaxed font-semibold">
                     "Every creative project, every photoshoot, every beat I produced was practice for the content 
                     creator I would eventually become. Art and engineering aren't opposites—they're complementary 
                     expressions of human creativity and problem-solving."
@@ -2043,7 +2047,7 @@ export default function Page() {
                   I was excluded more than once. Had to apply for readmission. Permitted to proceed on special
                   curriculum. Told to repeat years. It wasn't linear. It wasn't smooth. But it was mine.
                 </p>
-                <p className="text-gray-700 font-semibold text-lg text-[#8B4513]">
+                <p className="text-gray-700 font-semibold text-lg">
                   Every challenge shaped me. In 2021, I completed all requirements and qualified. Not just with a degree
                   — but with a mindset built on grit and endurance.
                 </p>
@@ -2627,7 +2631,7 @@ export default function Page() {
 
       {/* Community Section */}
       <section id="community" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        {/* fix the syntax error */}
+{/* fix the syntax error */}
 <div className="max-w-7xl mx-auto">
   <div className="text-center space-y-6 mb-16">
     <Badge className="bg-blue-600 text-white px-4 py-2 text-sm font-semibold">🤝 Join Our Community</Badge>
@@ -2766,21 +2770,7 @@ export default function Page() {
 </div>
 </section>
 
-<footer className="bg-gray-900 text-white py-8">
-  <div className="container mx-auto px-4 text-center">
-    <p className="text-sm mb-2">
-      &copy; {new Date().getFullYear()} Chrizeecry Collective. All rights reserved.
-    </p>
-    <a
-      href="/policies.html"
-      className="text-yellow-300 underline hover:text-yellow-400 transition-colors text-sm"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Policies
-    </a>
-  </div>
-</footer>
+<Footer />
 </div>
 )
 }
