@@ -1174,6 +1174,129 @@ export default function Page() {
         </div>
       </section>
 
+      {/* Fixed Bottom Section: The Chrizeecry Difference, Cost of Inaction, FAQ, and CTAs */}
+      <section id="chrizeecry-difference" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-amber-50 via-white to-yellow-50">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center space-y-3 mb-12">
+            <Badge className="bg-[#8B4513] text-white px-4 py-2 text-sm font-semibold">💡 The Chrizeecry Difference</Badge>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">Why This Isn't Just Another Course</h2>
+            <p className="text-gray-700 max-w-3xl mx-auto">Most engineering programs just throw textbooks at you. We build the Human Engineer. In the age of AI, technical skills are the baseline—your story is your currency.</p>
+          </div>
+
+          <div className="space-y-10">
+            {/* 1. The AI-Proof Edge */}
+            <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-6">
+              <h3 className="text-xl md:text-2xl font-bold text-[#8B4513] mb-3">🧠 1. The AI-Proof Edge</h3>
+              <p className="text-gray-700 mb-4">Artificial Intelligence can solve equations, but it cannot replicate resilience.</p>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                <li><span className="font-semibold">Contextual Intelligence:</span> We don't just teach theory; we teach how to apply specific engineering principles within the South African context (township to boardroom).</li>
+                <li><span className="font-semibold">The "Survivor" Mindset:</span> Learn from a mentor who navigated exclusion to become a Resident Engineer on major infrastructure projects.</li>
+                <li><span className="font-semibold">Emotional Durability:</span> Technical skills get you hired; emotional intelligence (EQ) and grit get you promoted.</li>
+              </ul>
+            </div>
+
+            {/* 2. The Multi-Sensory Lo-Fi Method */}
+            <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-6">
+              <h3 className="text-xl md:text-2xl font-bold text-[#8B4513] mb-3">🎧 2. The Multi-Sensory "Lo-Fi" Method</h3>
+              <p className="text-gray-700 mb-4"><span className="font-semibold">"Study with a Vibe, Not a Struggle."</span> We reject the idea that engineering must be dry and boring.</p>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                <li><span className="font-semibold">Rhythmic Learning:</span> Exclusive access to the Chrizeecry Beats library designed to induce "Deep Work" flow states.</li>
+                <li><span className="font-semibold">Visual & Auditory Anchors:</span> Complex Civil Tech and Physics concepts broken down using music, visuals, and storytelling.</li>
+              </ul>
+            </div>
+
+            {/* 3. The R100M Philosophy */}
+            <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-6">
+              <h3 className="text-xl md:text-2xl font-bold text-[#8B4513] mb-3">🏗️ 3. The R100M Philosophy</h3>
+              <p className="text-gray-700 mb-4"><span className="font-semibold">Content → Community → Creation → Capital</span> Stop chasing degrees. Start building value.</p>
+              <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                <li><span className="font-semibold">Beyond the Certificate:</span> Your NQF level matters less than your portfolio. We teach you how to document your work and build a "Public Resume" that attracts employers.</li>
+                <li><span className="font-semibold">The Business of Engineering:</span> Learn the skills universities ignore—negotiation, project management, and personal branding.</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Cost of Inaction */}
+          <div className="mt-16">
+            <div className="text-center space-y-3 mb-8">
+              <Badge className="bg-amber-600 text-white px-4 py-2 text-sm font-semibold">⏳ The Cost of Inaction</Badge>
+              <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900">Time is the only resource you can't engineer.</h3>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-2xl border border-amber-200 p-6">
+                <h4 className="text-lg font-bold text-red-600 mb-2">Path A: The Scattered Route</h4>
+                <p className="text-gray-700">You continue collecting free PDFs, watching random YouTube videos, and studying in isolation. You reach age 30 wondering why your salary has capped and why you feel "stuck" despite working hard.</p>
+              </div>
+              <div className="bg-white rounded-2xl border border-emerald-200 p-6">
+                <h4 className="text-lg font-bold text-emerald-700 mb-2">Path B: The Resilient Engineer Path</h4>
+                <p className="text-gray-700 mb-4">You join a structured ecosystem today.</p>
+                <ul className="list-disc pl-6 space-y-2 text-gray-700">
+                  <li><span className="font-semibold">In 3 Months:</span> You have a fortified understanding of Maths & Physics and a study network.</li>
+                  <li><span className="font-semibold">In 6 Months:</span> You are applying real-world engineering judgment and building a portfolio.</li>
+                  <li><span className="font-semibold">In 1 Year:</span> You are not just a student; you are a distinguishable candidate with a "Unique Value Proposition."</li>
+                </ul>
+              </div>
+            </div>
+
+            <p className="text-center text-gray-800 mt-6 font-semibold">Don't let another semester pass in mediocrity.</p>
+          </div>
+
+          {/* FAQ */}
+          <div className="mt-16">
+            <div className="text-center space-y-3 mb-8">
+              <Badge className="bg-[#8B4513] text-white px-4 py-2 text-sm font-semibold">❓ Frequently Asked Questions</Badge>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-white rounded-2xl border border-amber-200 p-6">
+                <h4 className="font-bold text-gray-900 mb-2">"I'm broke/struggling financially. Can I still join?"</h4>
+                <p className="text-gray-700">Yes. That is why we built <span className="font-semibold">The Vault (R129/mo)</span>. It is less than the price of a takeout meal but gives you the essentials to start climbing.</p>
+              </div>
+              <div className="bg-white rounded-2xl border border-amber-200 p-6">
+                <h4 className="font-bold text-gray-900 mb-2">"Is this for High Schoolers or University Students?"</h4>
+                <p className="text-gray-700">Both. The principles of <span className="font-semibold">Civil Tech, EGD, Maths, and Physics</span> are foundational. Whether you are aiming for distinction in Matric or survival in First Year, the methodology remains the same.</p>
+              </div>
+              <div className="bg-white rounded-2xl border border-amber-200 p-6">
+                <h4 className="font-bold text-gray-900 mb-2">"What if I need 1-on-1 help?"</h4>
+                <p className="text-gray-700">Join the <span className="font-semibold">Distinction Bootcamp</span>. It is capped at a small number to ensure I can give you personal feedback on your career strategy and technical projects.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Ready To Transform CTA */}
+          <div className="mt-16 text-center">
+            <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-6">🚀 Ready To Transform?</h3>
+            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">Join 1,000+ technical students who refused to accept exclusion and chose distinction.</p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold px-6 py-3 shadow-lg hover:shadow-xl"
+                onClick={() => window.open('#','_blank')}
+              >
+                GET STARTED - THE VAULT (R129)
+              </Button>
+              <Button
+                variant="outline"
+                className="border-2 border-[#8B4513] text-[#8B4513] hover:bg-[#8B4513] hover:text-white font-bold px-6 py-3"
+                onClick={() => window.open('#','_blank')}
+              >
+                JOIN THE COHORT (R374)
+              </Button>
+              <Button
+                className="bg-[#8B4513] hover:bg-[#6f3610] text-white font-bold px-6 py-3"
+                onClick={() => window.open('#','_blank')}
+              >
+                APPLY FOR BOOTCAMP
+              </Button>
+            </div>
+
+            <blockquote className="mt-6 text-gray-800 italic font-medium">
+              “I teach skills, not guarantees. But if you bring the discipline, I’ll bring the blueprint.” — <span className="font-semibold">Samson Chrizeecry Senyatsi , please add thia edit as it is</span>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
       {/* Special Recognition Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-amber-50 to-yellow-50">
         <div className="max-w-7xl mx-auto">
