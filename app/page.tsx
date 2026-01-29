@@ -1894,24 +1894,79 @@ export default function Page() {
             </Card>
           </div>
 
-          {/* Comparison & Trust Section */}
-          <div className="bg-gradient-to-r from-gray-50 to-amber-50 rounded-2xl p-8 border border-gray-200 mb-16">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Why Technical Students Choose Chrizeecry</h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="text-4xl mb-3">📊</div>
-                <h4 className="font-bold text-gray-900 mb-2">1000+ Engineers Transformed</h4>
-                <p className="text-sm text-gray-700">From exclusion to distinction in 12 weeks. Proven system with measurable results.</p>
+          {/* R100M Blueprint - Trust & Product Summary */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 mb-16 shadow-sm">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">🚀 SAMSON CHRIZEECRY SENYATSI: THE R100M BLUEPRINT</h3>
+
+            <div className="grid md:grid-cols-2 gap-8 items-start">
+              <div className="space-y-4">
+                <p className="text-gray-700">Primary Title: <span className="font-bold">The Technical Multi-Sensory Mentor</span></p>
+                <p className="text-gray-700">Also known as: <span className="font-medium">Civil Engineer Survivor</span>, <span className="font-medium">EGD & Civil Tech Specialist</span>, <span className="font-medium">Lo-Fi Study Architect</span></p>
+
+                <div className="mt-4 p-4 rounded-lg bg-gradient-to-r from-[#fef3c7] to-white border border-amber-200">
+                  <h4 className="font-bold text-gray-900 mb-2">🎯 The R100M Philosophy</h4>
+                  <p className="text-sm text-gray-700">Content is the vehicle — you are the product. Build systems that scale: <strong>Content → Community → Creation → Capital</strong>.</p>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4 mt-4">
+                  <div className="p-4 rounded-lg bg-white border shadow-sm">
+                    <h5 className="font-bold text-sm text-gray-900">Proven Scorecard</h5>
+                    <ul className="text-sm text-gray-700 mt-2 space-y-1">
+                      <li>• Civil Tech: <strong>90%</strong></li>
+                      <li>• EGD: <strong>83%</strong></li>
+                      <li>• Maths: <strong>71%</strong></li>
+                      <li>• Physics: <strong>79%</strong></li>
+                    </ul>
+                  </div>
+                  <div className="p-4 rounded-lg bg-white border shadow-sm">
+                    <h5 className="font-bold text-sm text-gray-900">Real-World Authority</h5>
+                    <p className="text-sm text-gray-700 mt-2">Resident engineer on a 1.1km road project. 8-year persistence story — practical skills meet teaching.</p>
+                  </div>
+                </div>
+
+                <p className="text-sm text-gray-600 italic mt-3">Note: This program is rigorous. Success requires disciplined effort from mentors, students, parents and community. We teach skills, not guarantees.</p>
               </div>
-              <div className="text-center">
-                <div className="text-4xl mb-3">🔧</div>
-                <h4 className="font-bold text-gray-900 mb-2">Real-World Projects</h4>
-                <p className="text-sm text-gray-700">Learn from someone who built a 1.1km road in Burgersfort. Theory + practice combined.</p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl mb-3">🎯</div>
-                <h4 className="font-bold text-gray-900 mb-2">Earn Back Your Investment</h4>
-                <p className="text-sm text-gray-700">Affiliate program allows you to earn 20-30% on referrals. Many students profit within first month.</p>
+
+              <div className="space-y-4">
+                <div className="p-6 rounded-2xl bg-gradient-to-br from-white/60 to-gray-50 border border-gray-200 shadow-md">
+                  <h4 className="font-bold text-gray-900 mb-3">🏗️ Product Ecosystem</h4>
+                  <ul className="text-sm text-gray-700 space-y-2">
+                    <li>• <strong>Free Layer</strong> — YouTube tutorials & lead magnets</li>
+                    <li>• <strong>Technical Mastery Academy</strong> — R349/month community (weekly walkthroughs, beats library, WhatsApp support)</li>
+                    <li>• <strong>Institutional</strong> — School programs & teacher training (R10k+)</li>
+                    <li>• <strong>IP Licensing</strong> — Frameworks & curricula for large-scale impact</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-lg bg-white border shadow-sm flex items-center justify-between">
+                  <div>
+                    <h5 className="font-bold text-gray-900">Trusted Results</h5>
+                    <p className="text-sm text-gray-600">1000+ students coached, measurable improvements, practical placements.</p>
+                  </div>
+                  <div className="ml-4">
+                    <div className="w-24 h-24 bg-gradient-to-br from-[#f8fafc] to-white rounded-xl flex items-center justify-center border border-gray-200 shadow-sm animate-pulse">
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-gray-900">1000+</div>
+                        <div className="text-xs text-gray-500">Engineers</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mini calculator / gamified CTA (lightweight) */}
+                <div className="mt-2 p-4 rounded-lg bg-gradient-to-br from-[#ffffff] to-[#f8fafc] border border-gray-200 text-center">
+                  <div className="text-sm text-gray-700 mb-2">Ready to see which tier fits you?</div>
+                  <div className="inline-flex items-center justify-center space-x-2">
+                    <input readOnly className="w-28 text-center rounded-md border px-2 py-1 text-sm" value="I want growth" />
+                    <button
+                      className="bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 py-1 rounded-md text-sm shadow-sm"
+                      onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
+                    >
+                      Check →
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">Small interactive tools coming soon — no heavy CPU, just clarity.</p>
+                </div>
               </div>
             </div>
           </div>
