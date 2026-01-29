@@ -57,6 +57,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <meta name="theme-color" content="#ffffff" />
+      </head>
       <GoogleTagManager gtmId="GTM-TBTFX79D" /> 
       <body className="antialiased">
         {children}
