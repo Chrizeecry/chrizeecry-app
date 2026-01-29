@@ -114,12 +114,14 @@ export default function Page() {
               >
                 My Story
               </button>
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="text-gray-700 hover:text-[#FFD700] transition-all duration-300 font-medium hover:scale-105"
+              <a
+                href="https://collective.chrizeecry.com/meet-and-great-the-community"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-[#FFD700] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#FFD700] text-[#8B4513] font-bold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl inline-block"
               >
-                Contact
-              </button>
+                🚀 Join Collective
+              </a>
             </nav>
 
             {/* Mobile Menu Button */}
@@ -167,12 +169,14 @@ export default function Page() {
               >
                 My Story
               </button>
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="block text-gray-700 hover:text-[#FFD700] transition-colors w-full text-left"
+              <a
+                href="https://collective.chrizeecry.com/meet-and-great-the-community"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block bg-gradient-to-r from-[#FFD700] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#FFD700] text-[#8B4513] font-bold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-center w-full"
               >
-                Contact
-              </button>
+                🚀 Join Collective
+              </a>
             </nav>
           </div>
         </div>
@@ -1773,7 +1777,7 @@ export default function Page() {
                     <span className="text-2xl">🧠</span>
                   </div>
                   <div>
-                    <CardTitle className="text-xl">Chrizeecry Maths Academy</CardTitle>
+                    <CardTitle className="text-xl">Chrizeecry Maths and Physics Academy</CardTitle>
                     <p className="text-sm text-gray-600">
                       Pure Maths, Technical Maths, and Maths Literacy (Grades 10–12)
                     </p>
@@ -1807,7 +1811,7 @@ export default function Page() {
                   className="w-full bg-green-600 hover:bg-green-700 text-white"
                   onClick={() =>
                     window.open(
-                      "https://wa.me/27736043894?text=Hi! I'd like to join the free Maths Academy community",
+                      "https://collective.chrizeecry.com/meet-and-great-the-community",
                       "_blank",
                     )
                   }
@@ -1863,7 +1867,7 @@ export default function Page() {
                   className="w-full bg-amber-600 hover:bg-amber-700 text-white"
                   onClick={() =>
                     window.open(
-                      "https://wa.me/27736043894?text=Hi! I'd like to join the free Civil & Structural community",
+                      "https://collective.chrizeecry.com/meet-and-great-the-community",
                       "_blank",
                     )
                   }
@@ -1919,7 +1923,7 @@ export default function Page() {
                   className="w-full bg-purple-600 hover:bg-purple-700 text-white"
                   onClick={() =>
                     window.open(
-                      "https://wa.me/27736043894?text=Hi! I'd like to join the free Music & Media community",
+                      "https://collective.chrizeecry.com/meet-and-great-the-community",
                       "_blank",
                     )
                   }
@@ -1964,7 +1968,7 @@ export default function Page() {
                   className="w-full bg-gray-600 hover:bg-gray-700 text-white"
                   onClick={() =>
                     window.open(
-                      "https://wa.me/27736043894?text=Hi! I'd like to join the free Nostalgia community",
+                      "https://collective.chrizeecry.com/meet-and-great-the-community",
                       "_blank",
                     )
                   }
@@ -1992,7 +1996,7 @@ export default function Page() {
                 size="lg"
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
                 onClick={() =>
-                  window.open("https://wa.me/27736043894?text=Hi! I'd like to join the free communities", "_blank")
+                  window.open("https://collective.chrizeecry.com/meet-and-great-the-community", "_blank")
                 }
               >
                 <MessageCircle className="mr-2 w-5 h-5" />
@@ -2683,8 +2687,7 @@ export default function Page() {
                 className="bg-green-600 hover:bg-green-700 text-white"
                 onClick={() =>
                   window.open(
-                    "https://wa.me/27736043894?text=Hi! I'd like to join the free WhatsApp community for " +
-                      channel.name,
+                    "https://collective.chrizeecry.com/meet-and-great-the-community",
                     "_blank",
                   )
                 }

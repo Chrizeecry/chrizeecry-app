@@ -237,11 +237,11 @@ export function PaymentModal({ planId, onClose }: PaymentModalProps) {
               />
               <Label htmlFor="terms" className="text-sm leading-relaxed">
                 I agree to the{" "}
-                <a href="#" className="text-blue-600 hover:underline">
+                <a href="/policies" className="text-blue-600 hover:underline">
                   Terms of Service
                 </a>{" "}
                 and{" "}
-                <a href="#" className="text-blue-600 hover:underline">
+                <a href="/policies" className="text-blue-600 hover:underline">
                   Privacy Policy
                 </a>
                 . I understand that I will receive access links via email and WhatsApp group invitations.
