@@ -94,7 +94,7 @@ export default function Page() {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-6">
               <button
                 onClick={() => scrollToSection("youtube-channels")}
                 className="flex items-center space-x-2 text-gray-700 hover:text-[#FFD700] transition-all duration-300 hover:scale-105 font-medium"
@@ -114,13 +114,19 @@ export default function Page() {
               >
                 My Story
               </button>
+              <Button
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold px-6 py-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
+              >
+                ⭐ Join Mastery Cohort
+              </Button>
               <a
                 href="https://collective.chrizeecry.com/meet-and-great-the-community"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-[#FFD700] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#FFD700] text-[#8B4513] font-bold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl inline-block"
+                className="text-gray-700 hover:text-[#FFD700] transition-all duration-300 font-medium hover:scale-105"
               >
-                🚀 Join Collective
+                Free Community
               </a>
             </nav>
 
@@ -1679,345 +1685,266 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Premium Offerings Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      {/* Premium Offerings Section - The Resilient Engineer Path */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-white via-amber-50 to-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center space-y-6 mb-16">
-            <Badge className="bg-gradient-to-r from-[#FFD700] to-[#FF8C00] text-[#8B4513] px-4 py-2 text-sm font-semibold">
-              💎 Premium Learning Experiences
+          {/* Header */}
+          <div className="text-center space-y-6 mb-20">
+            <Badge className="bg-gradient-to-r from-[#FF8C00] to-[#8B4513] text-white px-4 py-2 text-sm font-semibold">
+              🚀 THE RESILIENT ENGINEER PATH
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">Transform Your Learning Journey</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Choose from our specialized academies or join the complete collective for unlimited access to all
-              resources and earning opportunities.
+            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+              From Exclusion to <span className="bg-gradient-to-r from-[#FFD700] to-[#FF8C00] bg-clip-text text-transparent">Distinction</span>
+            </h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
+              Three strategic tiers designed for technical students, engineers, and builders who refuse to accept mediocrity. 
+              Choose your transformation level based on your ambition.
             </p>
           </div>
 
-          {/* Complete Collective Vault - Featured */}
-          <div className="mb-16">
-            <Card className="relative overflow-hidden border-2 border-[#FFD700] shadow-2xl bg-gradient-to-br from-[#8B4513] to-gray-900 text-white">
-              <div className="absolute top-4 right-4">
-                <Badge className="bg-gradient-to-r from-[#FFD700] to-[#FF8C00] text-[#8B4513] px-4 py-2 font-bold">
-                  🚀 MOST POPULAR
-                </Badge>
+          {/* Pricing Cards - Three Tier System */}
+          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+            {/* TIER 1: The Vault (Foundation) */}
+            <Card className="relative overflow-hidden border-2 border-green-400 hover:shadow-2xl transition-all duration-300 hover:scale-105">
+              <div className="absolute top-4 left-4">
+                <Badge className="bg-green-500 text-white px-3 py-1 text-xs font-bold">FOUNDATION</Badge>
               </div>
-
-              <CardHeader className="text-center pb-8">
-                <div className="w-20 h-20 bg-gradient-to-r from-[#FFD700] to-[#FF8C00] rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-3xl">🧰</span>
+              
+              <CardHeader className="text-center pb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">📚</span>
                 </div>
-                <CardTitle className="text-3xl font-bold text-white mb-4">Complete Collective Vault</CardTitle>
-                <div className="text-4xl font-bold text-[#FFD700] mb-2">R729.99/month</div>
-                <p className="text-xl text-gray-300 mb-4">All in one + 💰 EARN MONEY BY BEING A MEMBER</p>
-                <p className="text-lg text-yellow-100">Lifetime access to everything + future drops</p>
+                <CardTitle className="text-2xl font-bold text-gray-900 mb-2">The Vault</CardTitle>
+                <p className="text-sm text-gray-600 font-medium mb-4">Library of essentials</p>
+                <div className="space-y-1 mb-4">
+                  <div className="text-4xl font-bold text-green-600">R129</div>
+                  <p className="text-sm text-gray-600">/month or R1,290/year (save 17%)</p>
+                </div>
               </CardHeader>
 
               <CardContent className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-3">
-                      <span className="text-green-400">✅</span>
-                      <span>Monthly "New Drop" Actionable PDF</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-green-400">✅</span>
-                      <span>All community hubs unlimited slots (WhatsApp / Telegram / Discord)</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-green-400">✅</span>
-                      <span>EXTRA WOW: Quarterly Genius Box (AI tools, hacks)</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-green-400">✅</span>
-                      <span>Welcome Voice Note from Samson</span>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-3">
-                      <span className="text-green-400">✅</span>
-                      <span>Affiliate course (unlimited slots) - earn 20% - 29.99% profit sale</span>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-green-400">✅</span>
-                      <span>Virtual GUEST MONTHLY WORKSHOPS with experts</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-[#FFD700]/20">
-                  <h4 className="font-bold text-[#FFD700] mb-3">Recommended for:</h4>
-                  <ul className="grid md:grid-cols-2 gap-2 text-sm text-gray-300">
-                    <li>• Influencer marketers promoting products</li>
-                    <li>• Math tutors and teachers</li>
-                    <li>• Civil engineers and students</li>
-                    <li>• Anyone wanting side hustle income</li>
-                    <li>• Channel growth enthusiasts</li>
-                    <li>• Personal brand builders</li>
-                    <li>• Online money-making beginners</li>
+                <div className="space-y-3 border-t border-b border-green-200 py-6">
+                  <h4 className="font-bold text-gray-900 mb-4">✅ What's Included:</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start space-x-3">
+                      <span className="text-green-500 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700">Lifetime library access to all Maths & Physics resources</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-green-500 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700">Monthly "New Drop" Actionable PDFs</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-green-500 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700">Access to WhatsApp community groups</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-green-500 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700">Calculator hacks & memory tools</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-green-500 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700">Free access to monthly study sessions</span>
+                    </li>
                   </ul>
                 </div>
 
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <p className="text-sm text-gray-700"><span className="font-bold">Best for:</span> Students building foundational knowledge, cost-conscious learners, those exploring the journey</p>
+                </div>
+
                 <Button
-                  className="w-full bg-gradient-to-r from-[#FFD700] to-[#FF8C00] text-[#8B4513] font-bold py-4 text-lg hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+                  className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3"
                   onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
                 >
-                  Join the Collective - Start Earning Today!
+                  Start Here →
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* TIER 2: The Mastery Cohort (Community) - ANCHOR/FEATURED */}
+            <Card className="relative overflow-hidden border-4 border-amber-500 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 lg:scale-110 lg:z-10">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-200 to-orange-300 opacity-10 rounded-full -mr-16 -mt-16"></div>
+              
+              <div className="absolute top-4 right-4 space-y-2">
+                <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 text-xs font-bold block text-center">⭐ RECOMMENDED</Badge>
+                <Badge className="bg-red-500 text-white px-4 py-2 text-xs font-bold block text-center">25% OFF ⏰</Badge>
+              </div>
+
+              <CardHeader className="text-center pb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">🎯</span>
+                </div>
+                <CardTitle className="text-3xl font-bold text-gray-900 mb-2">The Mastery Cohort</CardTitle>
+                <p className="text-sm text-gray-700 font-bold mb-4">Structured transformation for engineers</p>
+                <div className="space-y-1 mb-4">
+                  <div className="space-y-1">
+                    <div className="text-xs text-gray-600 line-through">R499/month</div>
+                    <div className="text-4xl font-bold text-amber-600">R374</div>
+                    <p className="text-sm text-gray-600">/month (seasonal offer - limited time)</p>
+                  </div>
+                </div>
+              </CardHeader>
+
+              <CardContent className="space-y-6">
+                <div className="space-y-3 border-t border-b border-amber-200 py-6">
+                  <h4 className="font-bold text-gray-900 mb-4">✅ Everything in The Vault, PLUS:</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start space-x-3">
+                      <span className="text-amber-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">12-Week Cohort Program:</span> Structured live workshops with Samson & expert engineers</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-amber-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">Weekly Live Sessions:</span> Interactive problem-solving & mentorship circles</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-amber-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">AI Tools & Career Resources:</span> Resume generator, software stack guides, project templates</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-amber-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">Premium Community:</span> Networking with 500+ technical students & engineers</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-amber-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">Quarterly Genius Box:</span> Curated AI tools, discounts, and exclusive resources</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-amber-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">Affiliate Income:</span> Earn 20-30% on every referral you make</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-lg border-2 border-amber-200">
+                  <p className="text-sm text-gray-800"><span className="font-bold">Best for:</span> Serious technical students ready for structured transformation, those seeking live mentorship & peer accountability</p>
+                </div>
+
+                <Button
+                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-3 text-lg shadow-lg"
+                  onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
+                >
+                  Join the Cohort Now →
+                </Button>
+                <p className="text-xs text-center text-gray-600 italic">Limited to 100 spots | First cohort fills fast</p>
+              </CardContent>
+            </Card>
+
+            {/* TIER 3: The Distinction Bootcamp (Transformation) */}
+            <Card className="relative overflow-hidden border-2 border-purple-500 hover:shadow-2xl transition-all duration-300 hover:scale-105">
+              <div className="absolute top-4 left-4">
+                <Badge className="bg-purple-600 text-white px-3 py-1 text-xs font-bold">PREMIUM</Badge>
+              </div>
+
+              <CardHeader className="text-center pb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-violet-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">🏆</span>
+                </div>
+                <CardTitle className="text-2xl font-bold text-gray-900 mb-2">The Distinction Bootcamp</CardTitle>
+                <p className="text-sm text-gray-600 font-medium mb-4">12-week intensive transformation</p>
+                <div className="space-y-1 mb-4">
+                  <div className="text-4xl font-bold text-purple-600">R4,999</div>
+                  <p className="text-sm text-gray-600">one-time / 12-week intensive</p>
+                </div>
+              </CardHeader>
+
+              <CardContent className="space-y-6">
+                <div className="space-y-3 border-t border-b border-purple-200 py-6">
+                  <h4 className="font-bold text-gray-900 mb-4">✅ Everything in The Mastery Cohort, PLUS:</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start space-x-3">
+                      <span className="text-purple-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">1-on-1 Coaching:</span> Weekly 30-min calls with Samson focused on your unique goals</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-purple-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">Career Breakthrough Sprint:</span> Personalized job search strategy & portfolio building</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-purple-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">Project Mentorship:</span> Direct feedback on your engineering/technical projects</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-purple-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">Fast-Track Certification:</span> Advanced civil engineering & technical credentials</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-purple-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">Lifetime Vault Access:</span> All future updates, tools, and resources included forever</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-purple-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">VIP Network Pass:</span> Direct access to engineering firms, contractors, and employers</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-gradient-to-r from-purple-50 to-violet-50 p-4 rounded-lg border border-purple-200">
+                  <p className="text-sm text-gray-700"><span className="font-bold">Best for:</span> Career changers, professionals seeking rapid advancement, those ready for intensive 1-on-1 transformation</p>
+                </div>
+
+                <Button
+                  className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3"
+                  onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
+                >
+                  Apply for Bootcamp →
                 </Button>
               </CardContent>
             </Card>
           </div>
 
-          {/* Individual Academies */}
-          <div className="grid lg:grid-cols-2 gap-8 mb-12">
-            {/* Maths Academy */}
-            <Card className="hover:shadow-xl transition-all duration-300 border-2 border-green-500">
-              <CardHeader>
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">🧠</span>
-                  </div>
-                  <div>
-                    <CardTitle className="text-xl">Chrizeecry Maths and Physics Academy</CardTitle>
-                    <p className="text-sm text-gray-600">
-                      Pure Maths, Technical Maths, and Maths Literacy (Grades 10–12)
-                    </p>
-                  </div>
-                </div>
-
-                <div className="bg-green-50 p-4 rounded-lg mb-4">
-                  <h4 className="font-bold text-green-800 mb-2">Free Tier:</h4>
-                  <ul className="space-y-1 text-sm text-green-700">
-                    <li>✅ Access to public tips & tricks</li>
-                    <li>✅ Updates & free PDFs</li>
-                    <li>✅ Join the Free WhatsApp group (basic Q&A)</li>
-                    <li>✅ Invitations to free live events</li>
-                  </ul>
-                </div>
-
-                <div className="bg-gradient-to-r from-green-100 to-emerald-100 p-4 rounded-lg">
-                  <h4 className="font-bold text-green-800 mb-2">Premium Tier (R129/month):</h4>
-                  <ul className="space-y-1 text-sm text-green-700">
-                    <li>🚀 12-week Genius Mastery PDF</li>
-                    <li>🎥 Weekly video walkthroughs</li>
-                    <li>🧠 Calculator hacks & memory tools</li>
-                    <li>📅 Monthly Zoom Genius Study Rooms</li>
-                    <li>💬 Mentorship Circle (Premium WhatsApp)</li>
-                    <li>📈 Progress roadmap + private support</li>
-                  </ul>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button
-                  className="w-full bg-green-600 hover:bg-green-700 text-white"
-                  onClick={() =>
-                    window.open(
-                      "https://collective.chrizeecry.com/meet-and-great-the-community",
-                      "_blank",
-                    )
-                  }
-                >
-                  Join Free Community
-                </Button>
-                <Button
-                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white"
-                  onClick={() => window.open("https://nas.io/chrizeecry-maths-academy-premium", "_blank")}
-                >
-                  Get Premium Access - R129/month
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Civil & Structural */}
-            <Card className="hover:shadow-xl transition-all duration-300 border-2 border-amber-500">
-              <CardHeader>
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-12 h-12 bg-amber-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">🏗️</span>
-                  </div>
-                  <div>
-                    <CardTitle className="text-xl">Chrizeecry Civil & Structural</CardTitle>
-                    <p className="text-sm text-gray-600">For students, professionals, and DIY homeowners</p>
-                  </div>
-                </div>
-
-                <div className="bg-amber-50 p-4 rounded-lg mb-4">
-                  <h4 className="font-bold text-amber-800 mb-2">Free Tier:</h4>
-                  <ul className="space-y-1 text-sm text-amber-700">
-                    <li>✅ Engineering memes, tips, and community chat</li>
-                    <li>✅ Join Free WhatsApp support group</li>
-                    <li>✅ Starter career guides</li>
-                    <li>✅ Access to public resources</li>
-                  </ul>
-                </div>
-
-                <div className="bg-gradient-to-r from-amber-100 to-yellow-100 p-4 rounded-lg">
-                  <h4 className="font-bold text-amber-800 mb-2">Premium Tier (R379/month):</h4>
-                  <ul className="space-y-1 text-sm text-amber-700">
-                    <li>📘 80-page "Survive Civil" PDF</li>
-                    <li>🤖 AI Resume/CVs & Cover Letter Generator</li>
-                    <li>💻 Software Stack Guide + Discounts</li>
-                    <li>📞 Monthly Career Path Call with Samson</li>
-                    <li>💬 Premium WhatsApp Q&A Group</li>
-                    <li>🧱 Bonus templates & project checklists</li>
-                  </ul>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button
-                  className="w-full bg-amber-600 hover:bg-amber-700 text-white"
-                  onClick={() =>
-                    window.open(
-                      "https://collective.chrizeecry.com/meet-and-great-the-community",
-                      "_blank",
-                    )
-                  }
-                >
-                  Join Free Community
-                </Button>
-                <Button
-                  className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 text-white"
-                  onClick={() => window.open("https://nas.io/chrizeecry-civil-structural-premium", "_blank")}
-                >
-                  Get Premium Access - R379/month
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Music & Media */}
-            <Card className="hover:shadow-xl transition-all duration-300 border-2 border-purple-500">
-              <CardHeader>
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">🎵</span>
-                  </div>
-                  <div>
-                    <CardTitle className="text-xl">Chrizeecry Music & Media</CardTitle>
-                    <p className="text-sm text-gray-600">For artists, producers, and music creators</p>
-                  </div>
-                </div>
-
-                <div className="bg-purple-50 p-4 rounded-lg mb-4">
-                  <h4 className="font-bold text-purple-800 mb-2">Free Tier:</h4>
-                  <ul className="space-y-1 text-sm text-purple-700">
-                    <li>✅ Creative prompts + tips</li>
-                    <li>✅ Open WhatsApp discussion group</li>
-                    <li>✅ Starter production guides</li>
-                    <li>✅ Collab requests</li>
-                  </ul>
-                </div>
-
-                <div className="bg-gradient-to-r from-purple-100 to-violet-100 p-4 rounded-lg">
-                  <h4 className="font-bold text-purple-800 mb-2">Premium Tier (R237/month):</h4>
-                  <ul className="space-y-1 text-sm text-purple-700">
-                    <li>🎼 AI Music Toolkit PDF</li>
-                    <li>🎧 Full tutorials: recording, mixing, mastering</li>
-                    <li>🛠️ Song Creation Blueprint (1 hour system)</li>
-                    <li>🔍 Beat Review + Canva templates</li>
-                    <li>💬 Exclusive Collab WhatsApp Circle</li>
-                    <li>🎤 Monthly AMA + guest sessions</li>
-                  </ul>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white"
-                  onClick={() =>
-                    window.open(
-                      "https://collective.chrizeecry.com/meet-and-great-the-community",
-                      "_blank",
-                    )
-                  }
-                >
-                  Join Free Community
-                </Button>
-                <Button
-                  className="w-full bg-gradient-to-r from-purple-600 to-violet-600 text-white"
-                  onClick={() => window.open("https://nas.io/chrizeecry-music-and-media-premium", "_blank")}
-                >
-                  Get Premium Access - R237/month
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Curated Nostalgia */}
-            <Card className="hover:shadow-xl transition-all duration-300 border-2 border-gray-500">
-              <CardHeader>
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">💽</span>
-                  </div>
-                  <div>
-                    <CardTitle className="text-xl">Curated Nostalgia</CardTitle>
-                    <p className="text-sm text-gray-600">Analog thinking for modern challenges</p>
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-r from-gray-100 to-slate-100 p-4 rounded-lg">
-                  <h4 className="font-bold text-gray-800 mb-2">Premium Tier (R127/month):</h4>
-                  <ul className="space-y-1 text-sm text-gray-700">
-                    <li>🛠️ Themed throwback resources</li>
-                    <li>🎧 Creative gems collection</li>
-                    <li>🎤 Analog wisdom for modern challenges</li>
-                    <li>💬 Early access for subscribers</li>
-                    <li>📞 Community of like-minded creators</li>
-                  </ul>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button
-                  className="w-full bg-gray-600 hover:bg-gray-700 text-white"
-                  onClick={() =>
-                    window.open(
-                      "https://collective.chrizeecry.com/meet-and-great-the-community",
-                      "_blank",
-                    )
-                  }
-                >
-                  Join Free Community
-                </Button>
-                <Button
-                  className="w-full bg-gradient-to-r from-gray-600 to-slate-600 text-white"
-                  onClick={() => window.open("https://nas.io/chrizeecry-curated-nostalgia-premium", "_blank")}
-                >
-                  Get Premium Access - R127/month
-                </Button>
-              </CardContent>
-            </Card>
+          {/* Comparison & Trust Section */}
+          <div className="bg-gradient-to-r from-gray-50 to-amber-50 rounded-2xl p-8 border border-gray-200 mb-16">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Why Technical Students Choose Chrizeecry</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="text-4xl mb-3">📊</div>
+                <h4 className="font-bold text-gray-900 mb-2">1000+ Engineers Transformed</h4>
+                <p className="text-sm text-gray-700">From exclusion to distinction in 12 weeks. Proven system with measurable results.</p>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl mb-3">🔧</div>
+                <h4 className="font-bold text-gray-900 mb-2">Real-World Projects</h4>
+                <p className="text-sm text-gray-700">Learn from someone who built a 1.1km road in Burgersfort. Theory + practice combined.</p>
+              </div>
+              <div className="text-center">
+                <div className="text-4xl mb-3">🎯</div>
+                <h4 className="font-bold text-gray-900 mb-2">Earn Back Your Investment</h4>
+                <p className="text-sm text-gray-700">Affiliate program allows you to earn 20-30% on referrals. Many students profit within first month.</p>
+              </div>
+            </div>
           </div>
 
-          {/* Call to Action */}
-          <div className="text-center">
-            <p className="text-gray-600 mb-6">
-              Ready to transform your learning journey? Start with our free communities or dive deep with premium
-              access.
+          {/* Final CTA */}
+          <div className="text-center space-y-6">
+            <h3 className="text-3xl font-bold text-gray-900">Ready to Transform?</h3>
+            <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+              No matter where you're starting, there's a tier designed for your journey. Join 1000+ technical students 
+              who refused to accept exclusion and chose distinction instead.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Button
                 size="lg"
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
-                onClick={() =>
-                  window.open("https://collective.chrizeecry.com/meet-and-great-the-community", "_blank")
-                }
-              >
-                <MessageCircle className="mr-2 w-5 h-5" />
-                Join Free Communities
-              </Button>
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-[#FFD700] to-[#FF8C00] text-[#8B4513] px-8 py-3 hover:scale-105 transition-all duration-300"
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold px-8 py-4 text-lg shadow-lg"
                 onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
               >
-                <Star className="mr-2 w-5 h-5" />
-                Get Complete Access
+                View All Options
+              </Button>
+              <Button
+                size="lg"
+                className="bg-gray-900 hover:bg-gray-800 text-white font-bold px-8 py-4 text-lg"
+                onClick={() => window.open("https://collective.chrizeecry.com/meet-and-great-the-community", "_blank")}
+              >
+                Start Free (No Card Required)
               </Button>
             </div>
-            <p className="text-sm text-gray-500 mt-4">
-              Learn More About The Founder:{" "}
-              <a href="https://chrizeecry.com" className="text-[#FFD700] hover:underline">
-                chrizeecry.com
-              </a>
+            <p className="text-sm text-gray-600 italic">
+              Questions? Join our free WhatsApp community first to connect with current members and ask anything.
             </p>
           </div>
+        </div>
+      </section>
         </div>
       </section>
 
