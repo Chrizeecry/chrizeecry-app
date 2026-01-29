@@ -19,8 +19,6 @@ import {
 } from "lucide-react"
 import Footer from "@/components/footer";
 
-// fix the syntax
-
 export default function Page() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -68,8 +66,6 @@ export default function Page() {
     window.scrollTo({ top: 0, behavior: "smooth" })
     setMobileNavOpen(false)
   }
-
-  // fix the syntax error below
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-yellow-50">

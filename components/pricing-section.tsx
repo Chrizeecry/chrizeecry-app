@@ -1,8 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle } from "lucide-react"
 
 interface PricingSectionProps {
@@ -16,7 +15,7 @@ export function PricingSection({ onPlanSelect }: PricingSectionProps) {
       name: "Complete Collective",
       price: "R397",
       originalPrice: "R972",
-      savings: "Save R575!",
+      savings: "Save R575",
       description: "Access all four academies, exclusive content, priority support, and monthly 1-on-1 sessions.",
       features: [
         "All 4 Academies",
@@ -27,7 +26,7 @@ export function PricingSection({ onPlanSelect }: PricingSectionProps) {
         "Lifetime Updates",
       ],
       popular: true,
-      badge: "Best Value - Save 23%",
+      badge: "Best Value",
     },
     {
       id: "lifetime",
@@ -46,73 +45,120 @@ export function PricingSection({ onPlanSelect }: PricingSectionProps) {
         "Future Content Included",
       ],
       popular: false,
-      badge: "Lifetime Access!",
+      badge: "Lifetime",
     },
   ]
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="text-center space-y-4 mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Choose Your Investment</h2>
-        <p className="text-xl text-gray-600">Select the plan that best fits your learning goals and budget.</p>
+    <div className="w-full max-w-6xl mx-auto px-4 py-12 md:py-20">
+      <div className="text-center space-y-3 mb-12">
+        <h2 className="text-3xl md:text-4xl font-700 tracking-tight text-gray-950">
+          Choose Your Plan
+        </h2>
+        <p className="text-base text-gray-600 max-w-2xl mx-auto">
+          Select the membership that fits your learning journey.
+        </p>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <div className="grid lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
         {plans.map((plan) => (
-          <Card
+          <div
             key={plan.id}
-            className={`relative p-8 ${plan.popular ? "border-2 border-blue-500 shadow-xl" : "border border-gray-200"}`}
+            className={`relative rounded-3xl transition-all duration-300 ${
+              plan.popular
+                ? "lg:ring-2 lg:ring-gray-900 lg:scale-105"
+                : "ring-1 ring-gray-200"
+            } overflow-hidden group`}
           >
+            {/* Glass effect background */}
+            <div
+              className={`absolute inset-0 ${
+                plan.popular
+                  ? "bg-gradient-to-br from-gray-900/5 to-gray-900/10"
+                  : "bg-gray-50/50"
+              }`}
+            />
+
             {plan.popular && (
-              <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-1">
-                {plan.badge}
-              </Badge>
+              <div className="relative mx-4 mt-4 inline-block">
+                <span className="inline-block bg-gray-900 text-white text-xs font-600 px-3 py-1 rounded-full tracking-wide">
+                  {plan.badge}
+                </span>
+              </div>
             )}
 
-            <CardHeader className="text-center pb-8">
-              <CardTitle className="text-2xl font-bold text-gray-900">{plan.name}</CardTitle>
-              <div className="space-y-2">
-                <div className="flex items-center justify-center space-x-2">
-                  <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                  {plan.originalPrice && (
-                    <span className="text-xl text-gray-500 line-through">{plan.originalPrice}</span>
+            <div className="relative p-8 md:p-10 space-y-8">
+              {/* Price Section */}
+              <div className="space-y-4">
+                <h3 className="text-xl md:text-2xl font-600 text-gray-950">
+                  {plan.name}
+                </h3>
+
+                <div className="space-y-2">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-700 tracking-tight text-gray-950">
+                      {plan.price}
+                    </span>
+                    {plan.originalPrice && (
+                      <span className="text-base text-gray-500 line-through font-500">
+                        {plan.originalPrice}
+                      </span>
+                    )}
+                  </div>
+                  {plan.savings && (
+                    <p className="text-sm font-500 text-gray-600">
+                      {plan.savings}
+                    </p>
                   )}
                 </div>
-                <div className="text-green-600 font-semibold">{plan.savings}</div>
-              </div>
-              <CardDescription className="text-gray-600 mt-4">{plan.description}</CardDescription>
-            </CardHeader>
 
-            <CardContent className="space-y-6">
-              <ul className="space-y-3">
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  {plan.description}
+                </p>
+              </div>
+
+              {/* Features List */}
+              <ul className="space-y-4">
                 {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-center space-x-3">
-                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                    <span className="text-gray-700">{feature}</span>
+                  <li key={index} className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-gray-900 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-gray-700 font-500">{feature}</span>
                   </li>
                 ))}
               </ul>
 
+              {/* CTA Button */}
               <Button
-                className={`w-full py-3 ${
+                className={`w-full h-12 rounded-2xl font-600 text-base transition-all duration-300 ${
                   plan.popular
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
-                    : "bg-gray-900 hover:bg-gray-800 text-white"
+                    ? "bg-gray-900 hover:bg-gray-800 text-white active:scale-98"
+                    : "bg-gray-100 hover:bg-gray-200 text-gray-900 active:scale-98"
                 }`}
                 onClick={() => onPlanSelect(plan.id)}
               >
-                {plan.id === "lifetime" ? "Get Lifetime Access" : "Join Complete Collective"}
+                {plan.id === "lifetime" ? "Get Lifetime Access" : "Join Now"}
               </Button>
 
-              <div className="text-center text-sm text-gray-500">30-Day Money-Back Guarantee</div>
-            </CardContent>
-          </Card>
+              {/* Guarantee */}
+              <div className="text-center pt-4 border-t border-gray-200">
+                <p className="text-xs text-gray-500 font-500 tracking-wide">
+                  30-Day Money-Back Guarantee
+                </p>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
 
-      <div className="text-center mt-12">
-        <p className="text-gray-600 mb-4">Need help choosing? Our team is here to help you find the perfect plan.</p>
-        <Button variant="outline" size="lg">
+      {/* Support CTA */}
+      <div className="text-center mt-16">
+        <p className="text-sm text-gray-600 mb-6">
+          Need help choosing the right plan for you?
+        </p>
+        <Button
+          variant="outline"
+          className="rounded-2xl border-gray-300 hover:bg-gray-50 text-gray-900 font-500 h-11"
+        >
           Schedule a Consultation
         </Button>
       </div>
