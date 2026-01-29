@@ -1945,8 +1945,6 @@ export default function Page() {
           </div>
         </div>
       </section>
-        </div>
-      </section>
 
       {/* The Story Section */}
       <section id="story" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
