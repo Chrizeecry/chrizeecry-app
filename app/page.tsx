@@ -2009,82 +2009,99 @@ export default function Page() {
             </Card>
           </div>
 
-          {/* R100M Blueprint - Trust & Product Summary */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-200 mb-16 shadow-sm">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">🚀 SAMSON CHRIZEECRY SENYATSI: THE R100M BLUEPRINT</h3>
+ {/* Authority & Trust Section */}
+<div className="bg-slate-900 text-white rounded-3xl p-8 md:p-12 border border-slate-800 mb-16 shadow-2xl overflow-hidden relative">
+  {/* Decorative background element */}
+  <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 blur-[100px] -z-0" />
+  
+  <div className="relative z-10">
+    <div className="text-center mb-12">
+      <h3 className="text-3xl font-extrabold tracking-tight mb-4">
+        Why the Chrizeecry Method Works
+      </h3>
+      <p className="text-slate-400 max-w-2xl mx-auto">
+        Combining high-tier academic theory from Wits University with the grit of real-world site engineering.
+      </p>
+    </div>
 
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <div className="space-y-4">
-                <p className="text-gray-700">Primary Title: <span className="font-bold">The Technical Multi-Sensory Mentor</span></p>
-                <p className="text-gray-700">Also known as: <span className="font-medium">Civil Engineer Survivor</span>, <span className="font-medium">EGD & Civil Tech Specialist</span>, <span className="font-medium">Lo-Fi Study Architect</span></p>
-
-                <div className="mt-4 p-4 rounded-lg bg-gradient-to-r from-[#fef3c7] to-white border border-amber-200">
-                  <h4 className="font-bold text-gray-900 mb-2">🎯 The R100M Philosophy</h4>
-                  <p className="text-sm text-gray-700">Content is the vehicle — you are the product. Build systems that scale: <strong>Content → Community → Creation → Capital</strong>.</p>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-4 mt-4">
-                  <div className="p-4 rounded-lg bg-white border shadow-sm">
-                    <h5 className="font-bold text-sm text-gray-900">Proven Scorecard</h5>
-                    <ul className="text-sm text-gray-700 mt-2 space-y-1">
-                      <li>• Civil Tech: <strong>90%</strong></li>
-                      <li>• EGD: <strong>83%</strong></li>
-                      <li>• Maths: <strong>71%</strong></li>
-                      <li>• Physics: <strong>79%</strong></li>
-                    </ul>
-                  </div>
-                  <div className="p-4 rounded-lg bg-white border shadow-sm">
-                    <h5 className="font-bold text-sm text-gray-900">Real-World Authority</h5>
-                    <p className="text-sm text-gray-700 mt-2">Resident engineer on a 1.1km road project. 8-year persistence story — practical skills meet teaching.</p>
-                  </div>
-                </div>
-
-                <p className="text-sm text-gray-600 italic mt-3">Note: This program is rigorous. Success requires disciplined effort from mentors, students, parents and community. We teach skills, not guarantees.</p>
-              </div>
-
-              <div className="space-y-4">
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-white/60 to-gray-50 border border-gray-200 shadow-md">
-                  <h4 className="font-bold text-gray-900 mb-3">🏗️ Product Ecosystem</h4>
-                  <ul className="text-sm text-gray-700 space-y-2">
-                    <li>• <strong>Free Layer</strong> — YouTube tutorials & lead magnets</li>
-                    <li>• <strong>Technical Mastery Academy</strong> — R349/month community (weekly walkthroughs, beats library, WhatsApp support)</li>
-                    <li>• <strong>Institutional</strong> — School programs & teacher training (R10k+)</li>
-                    <li>• <strong>IP Licensing</strong> — Frameworks & curricula for large-scale impact</li>
-                  </ul>
-                </div>
-
-                <div className="p-4 rounded-lg bg-white border shadow-sm flex items-center justify-between">
-                  <div>
-                    <h5 className="font-bold text-gray-900">Trusted Results</h5>
-                    <p className="text-sm text-gray-600">1000+ students coached, measurable improvements, practical placements.</p>
-                  </div>
-                  <div className="ml-4">
-                    <div className="w-24 h-24 bg-gradient-to-br from-[#f8fafc] to-white rounded-xl flex items-center justify-center border border-gray-200 shadow-sm animate-pulse">
-                      <div className="text-center">
-                        <div className="text-sm font-bold text-gray-900">1000+</div>
-                        <div className="text-xs text-gray-500">Engineers</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Mini calculator / gamified CTA (lightweight) */}
-                <div className="mt-2 p-4 rounded-lg bg-gradient-to-br from-[#ffffff] to-[#f8fafc] border border-gray-200 text-center">
-                  <div className="text-sm text-gray-700 mb-2">Ready to see which tier fits you?</div>
-                  <div className="inline-flex items-center justify-center space-x-2">
-                    <input readOnly className="w-28 text-center rounded-md border px-2 py-1 text-sm" value="I want growth" />
-                    <button
-                      className="bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 py-1 rounded-md text-sm shadow-sm"
-                      onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
-                    >
-                      Check →
-                    </button>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">Small interactive tools coming soon — no heavy CPU, just clarity.</p>
-                </div>
-              </div>
-            </div>
+    <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="space-y-8">
+        {/* The Academic Edge */}
+        <div className="flex gap-4">
+          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/20 flex items-center justify-center border border-amber-500/50">
+            <span className="text-amber-500 font-bold">01</span>
           </div>
+          <div>
+            <h4 className="text-xl font-bold mb-2">The Wits Engineering Pedigree</h4>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              I survived the 2x academic exclusion trap at Wits to graduate as a <span className="text-white font-semibold">BSc Civil Engineer</span>. I don't just teach the syllabus; I teach the resilience needed to survive the hardest degree in Africa.
+            </p>
+          </div>
+        </div>
+
+        {/* Real World Authority */}
+        <div className="flex gap-4">
+          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-500/50">
+            <span className="text-blue-500 font-bold">02</span>
+          </div>
+          <div>
+            <h4 className="text-xl font-bold mb-2">Real-World Site Authority</h4>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              As a Resident Engineer on major <span className="text-white font-semibold">1.1km infrastructure projects</span>, I bring practical site knowledge into the classroom. My students see how theory builds real roads and bridges.
+            </p>
+          </div>
+        </div>
+
+        {/* Multi-Sensory Approach */}
+        <div className="flex gap-4">
+          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center border border-purple-500/50">
+            <span className="text-purple-500 font-bold">03</span>
+          </div>
+          <div>
+            <h4 className="text-xl font-bold mb-2">The Lo-Fi Focus System</h4>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              I am the <span className="text-white font-semibold">Lo-Fi Study Architect</span>. By combining Motswako-inspired beats with technical visualisations, I help students enter a "flow state" where complex EGD and Calculus become second nature.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 shadow-inner">
+        <h4 className="text-center font-bold mb-6 text-amber-500 uppercase tracking-widest text-sm">
+          Proven Excellence
+        </h4>
+        <div className="grid grid-cols-2 gap-4 mb-8">
+          <div className="text-center p-4 bg-slate-900 rounded-xl border border-slate-700">
+            <div className="text-2xl font-black text-white">90%</div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-tighter">Civil Tech Score</div>
+          </div>
+          <div className="text-center p-4 bg-slate-900 rounded-xl border border-slate-700">
+            <div className="text-2xl font-black text-white">83%</div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-tighter">EGD Distinction</div>
+          </div>
+          <div className="text-center p-4 bg-slate-900 rounded-xl border border-slate-700">
+            <div className="text-2xl font-black text-white">1000+</div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-tighter">Students Coached</div>
+          </div>
+          <div className="text-center p-4 bg-slate-900 rounded-xl border border-slate-700">
+            <div className="text-2xl font-black text-white">8 yrs</div>
+            <div className="text-[10px] text-slate-500 uppercase tracking-tighter">Field Experience</div>
+          </div>
+        </div>
+        
+        <button 
+          onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
+          className="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-black py-4 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg flex items-center justify-center gap-2"
+        >
+          SECURE YOUR SPOT NOW <span className="text-xl">→</span>
+        </button>
+        <p className="text-[10px] text-center text-slate-500 mt-4 px-4 leading-tight">
+          Limited capacity for live mentorship. We prioritize students who are ready to put in the disciplined effort required for distinction.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
           {/* Final CTA */}
           <div className="text-center space-y-6">
