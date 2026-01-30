@@ -18,6 +18,9 @@ import {
   MessageCircle,
 } from "lucide-react"
 import Footer from "@/components/footer";
+import BlueprintHero from "@/components/blueprint-hero";
+import PricingSection from "@/components/pricing-section";
+import CostOfInaction from "@/components/cost-of-inaction";
 
 export default function Page() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
@@ -1178,120 +1181,113 @@ export default function Page() {
       <section id="chrizeecry-difference" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-amber-50 via-white to-yellow-50">
         <div className="max-w-5xl mx-auto">
           <div className="text-center space-y-3 mb-12">
-            <Badge className="bg-[#8B4513] text-white px-4 py-2 text-sm font-semibold">💡 The Chrizeecry Difference</Badge>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">Why This Isn't Just Another Course</h2>
-            <p className="text-gray-700 max-w-3xl mx-auto">Most engineering programs just throw textbooks at you. We build the Human Engineer. In the age of AI, technical skills are the baseline—your story is your currency.</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">💡 Why This Isn't Just Another Course</h2>
+            <p className="text-gray-700 max-w-3xl mx-auto">Most programs teach textbooks. We build the <strong>Human Engineer</strong>. In the age of AI, your story is your greatest asset.</p>
           </div>
 
-          <div className="space-y-10">
+          {/* Pillars with Glass Effect */}
+          <div className="space-y-8">
             {/* 1. The AI-Proof Edge */}
-            <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-6">
+            <div className="bg-white/50 backdrop-blur-lg rounded-2xl border border-white/30 shadow-lg p-6 transform hover:scale-105 transition-transform duration-300">
               <h3 className="text-xl md:text-2xl font-bold text-[#8B4513] mb-3">🧠 1. The AI-Proof Edge</h3>
-              <p className="text-gray-700 mb-4">Artificial Intelligence can solve equations, but it cannot replicate resilience.</p>
-              <ul className="list-disc pl-6 space-y-2 text-gray-700">
-                <li><span className="font-semibold">Contextual Intelligence:</span> We don't just teach theory; we teach how to apply specific engineering principles within the South African context (township to boardroom).</li>
-                <li><span className="font-semibold">The "Survivor" Mindset:</span> Learn from a mentor who navigated exclusion to become a Resident Engineer on major infrastructure projects.</li>
-                <li><span className="font-semibold">Emotional Durability:</span> Technical skills get you hired; emotional intelligence (EQ) and grit get you promoted.</li>
+              <p className="text-gray-800 mb-4">AI can solve equations. It can't replicate <strong>resilience</strong>.</p>
+              <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                <li><strong>Contextual Intelligence:</strong> Applying engineering principles to the South African reality, from township to boardroom.</li>
+                <li><strong>The "Survivor" Mindset:</strong> Learn from a mentor who turned exclusion into a career as a Resident Engineer.</li>
+                <li><strong>Emotional Durability:</strong> Technical skills get you in the door. Grit and EQ get you promoted.</li>
               </ul>
             </div>
 
-            {/* 2. The Multi-Sensory Lo-Fi Method */}
-            <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-6">
-              <h3 className="text-xl md:text-2xl font-bold text-[#8B4513] mb-3">🎧 2. The Multi-Sensory "Lo-Fi" Method</h3>
-              <p className="text-gray-700 mb-4"><span className="font-semibold">"Study with a Vibe, Not a Struggle."</span> We reject the idea that engineering must be dry and boring.</p>
-              <ul className="list-disc pl-6 space-y-2 text-gray-700">
-                <li><span className="font-semibold">Rhythmic Learning:</span> Exclusive access to the Chrizeecry Beats library designed to induce "Deep Work" flow states.</li>
-                <li><span className="font-semibold">Visual & Auditory Anchors:</span> Complex Civil Tech and Physics concepts broken down using music, visuals, and storytelling.</li>
+            {/* 2. The Multi-Sensory Method */}
+            <div className="bg-white/50 backdrop-blur-lg rounded-2xl border border-white/30 shadow-lg p-6 transform hover:scale-105 transition-transform duration-300">
+              <h3 className="text-xl md:text-2xl font-bold text-[#8B4513] mb-3">🎧 2. The Multi-Sensory "Afro-soul beats and Motswako Rap Songs From Lefatlheng To States" Method</h3>
+              <p className="text-gray-800 mb-4"><strong>"Study with a Vibe, Not a Struggle."</strong></p>
+              <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                <li><strong>Rhythmic Learning:</strong> Access the exclusive <em>Chrizeecry Beats</em> library to find your "Deep Work" flow.</li>
+                <li><strong>Visual & Auditory Anchors:</strong> Breaking down complex topics with music, visuals, and storytelling.</li>
               </ul>
             </div>
 
             {/* 3. The R100M Philosophy */}
-            <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-6">
+            <div className="bg-white/50 backdrop-blur-lg rounded-2xl border border-white/30 shadow-lg p-6 transform hover:scale-105 transition-transform duration-300">
               <h3 className="text-xl md:text-2xl font-bold text-[#8B4513] mb-3">🏗️ 3. The R100M Philosophy</h3>
-              <p className="text-gray-700 mb-4"><span className="font-semibold">Content → Community → Creation → Capital</span> Stop chasing degrees. Start building value.</p>
-              <ul className="list-disc pl-6 space-y-2 text-gray-700">
-                <li><span className="font-semibold">Beyond the Certificate:</span> Your NQF level matters less than your portfolio. We teach you how to document your work and build a "Public Resume" that attracts employers.</li>
-                <li><span className="font-semibold">The Business of Engineering:</span> Learn the skills universities ignore—negotiation, project management, and personal branding.</li>
+              <p className="text-gray-800 mb-4"><strong>Content → Community → Creation → Capital.</strong> Stop chasing degrees. Start building value.</p>
+              <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                <li><strong>Beyond the Certificate:</strong> Your NQF 8 (honours-level) matters less than your portfolio. Build a "Public Resume" that gets you noticed.</li>
+                <li><strong>The Business of Engineering:</strong> Learn what universities don't teach—negotiation, project management, and personal branding.</li>
               </ul>
             </div>
           </div>
 
           {/* Cost of Inaction */}
-          <div className="mt-16">
-            <div className="text-center space-y-3 mb-8">
-              <Badge className="bg-amber-600 text-white px-4 py-2 text-sm font-semibold">⏳ The Cost of Inaction</Badge>
-              <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900">Time is the only resource you can't engineer.</h3>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white rounded-2xl border border-amber-200 p-6">
-                <h4 className="text-lg font-bold text-red-600 mb-2">Path A: The Scattered Route</h4>
-                <p className="text-gray-700">You continue collecting free PDFs, watching random YouTube videos, and studying in isolation. You reach age 30 wondering why your salary has capped and why you feel "stuck" despite working hard.</p>
-              </div>
-              <div className="bg-white rounded-2xl border border-emerald-200 p-6">
-                <h4 className="text-lg font-bold text-emerald-700 mb-2">Path B: The Resilient Engineer Path</h4>
-                <p className="text-gray-700 mb-4">You join a structured ecosystem today.</p>
-                <ul className="list-disc pl-6 space-y-2 text-gray-700">
-                  <li><span className="font-semibold">In 3 Months:</span> You have a fortified understanding of Maths & Physics and a study network.</li>
-                  <li><span className="font-semibold">In 6 Months:</span> You are applying real-world engineering judgment and building a portfolio.</li>
-                  <li><span className="font-semibold">In 1 Year:</span> You are not just a student; you are a distinguishable candidate with a "Unique Value Proposition."</li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-center text-gray-800 mt-6 font-semibold">Don't let another semester pass in mediocrity.</p>
-          </div>
+          <CostOfInaction />
 
           {/* FAQ */}
-          <div className="mt-16">
-            <div className="text-center space-y-3 mb-8">
-              <Badge className="bg-[#8B4513] text-white px-4 py-2 text-sm font-semibold">❓ Frequently Asked Questions</Badge>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white rounded-2xl border border-amber-200 p-6">
-                <h4 className="font-bold text-gray-900 mb-2">"I'm broke/struggling financially. Can I still join?"</h4>
-                <p className="text-gray-700">Yes. That is why we built <span className="font-semibold">The Vault (R129/mo)</span>. It is less than the price of a takeout meal but gives you the essentials to start climbing.</p>
-              </div>
-              <div className="bg-white rounded-2xl border border-amber-200 p-6">
-                <h4 className="font-bold text-gray-900 mb-2">"Is this for High Schoolers or University Students?"</h4>
-                <p className="text-gray-700">Both. The principles of <span className="font-semibold">Civil Tech, EGD, Maths, and Physics</span> are foundational. Whether you are aiming for distinction in Matric or survival in First Year, the methodology remains the same.</p>
-              </div>
-              <div className="bg-white rounded-2xl border border-amber-200 p-6">
-                <h4 className="font-bold text-gray-900 mb-2">"What if I need 1-on-1 help?"</h4>
-                <p className="text-gray-700">Join the <span className="font-semibold">Distinction Bootcamp</span>. It is capped at a small number to ensure I can give you personal feedback on your career strategy and technical projects.</p>
-              </div>
+          <div className="mt-20">
+            <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-8 text-center">❓ Frequently Asked Questions</h3>
+            <div className="space-y-4 max-w-3xl mx-auto">
+                <div className="bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 p-4">
+                  <h4 className="font-bold text-gray-900">"I'm broke. Can I still join?"</h4>
+                  <p className="text-gray-700 mt-1">Yes. <strong>The Vault (R129/month)</strong> gives you the essentials to start climbing for less than a takeout meal.</p>
+                </div>
+                <div className="bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 p-4">
+                  <h4 className="font-bold text-gray-900">"Is this for High School or University?"</h4>
+                  <p className="text-gray-700 mt-1">Both. The principles are foundational, whether you're aiming for a Matric distinction or surviving First Year.</p>
+                </div>
+                <div className="bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 p-4">
+                  <h4 className="font-bold text-gray-900">"What if I need 1-on-1 help or private video call zoom consultation?"</h4>
+                  <p className="text-gray-700 mt-1">Join the <strong>Distinction Bootcamp</strong>. It's capped for personal feedback on your career and technical projects.</p>
+                </div>
             </div>
           </div>
 
           {/* Ready To Transform CTA */}
-          <div className="mt-16 text-center">
-            <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-6">🚀 Ready To Transform?</h3>
-            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">Join 1,000+ technical students who refused to accept exclusion and chose distinction.</p>
+          <div className="mt-20 text-center bg-white/60 backdrop-blur-xl rounded-3xl border border-white/40 shadow-2xl p-8 transform hover:shadow-3xl transition-all duration-500">
+            <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-gray-900 mb-4">🚀 Ready to Transform?</h3>
+            <p className="text-lg text-gray-800 mb-10 max-w-3xl mx-auto">Join <span className="font-bold text-amber-600">930+ subscribed YouTube students</span> who chose distinction over exclusion.</p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button
-                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold px-6 py-3 shadow-lg hover:shadow-xl"
-                onClick={() => window.open('#','_blank')}
-              >
-                GET STARTED - THE VAULT (R129)
-              </Button>
-              <Button
-                variant="outline"
-                className="border-2 border-[#8B4513] text-[#8B4513] hover:bg-[#8B4513] hover:text-white font-bold px-6 py-3"
-                onClick={() => window.open('#','_blank')}
-              >
-                JOIN THE COHORT (R374)
-              </Button>
-              <Button
-                className="bg-[#8B4513] hover:bg-[#6f3610] text-white font-bold px-6 py-3"
-                onClick={() => window.open('#','_blank')}
-              >
-                APPLY FOR BOOTCAMP
-              </Button>
+            <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {/* THE VAULT */}
+              <div className="group relative border border-amber-400/50 rounded-2xl p-6 flex flex-col justify-between bg-amber-50/30 hover:bg-amber-50/70 hover:shadow-lg hover:scale-105 transition-all duration-300">
+                <div>
+                  <h4 className="font-extrabold text-xl text-amber-900">THE VAULT</h4>
+                  <p className="text-4xl font-black my-3 text-amber-700">R129<span className="text-base font-medium">/month</span></p>
+                  <p className="text-sm text-amber-800 mb-4">Lightweight. Essential. Immediate.</p>
+                </div>
+                <Button className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold shadow-lg hover:shadow-xl transform group-hover:-translate-y-1 transition-transform" onClick={() => window.open('#','_blank')}>
+                  Get Started
+                </Button>
+              </div>
+
+              {/* THE COHORT */}
+              <div className="group relative border-2 border-[#8B4513] rounded-2xl p-6 flex flex-col justify-between bg-[#8B4513]/10 hover:bg-[#8B4513]/20 shadow-xl scale-105 hover:scale-110 transition-all duration-300">
+                <div className="absolute -top-3 right-4 bg-gradient-to-r from-[#8B4513] to-amber-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">BEST VALUE</div>
+                <div>
+                  <h4 className="font-extrabold text-xl text-[#8B4513]">THE CIVIL TECH & EGD MASTERY COHORT</h4>
+                  <p className="text-sm text-gray-600 mb-2">For Technical High Schoolers & First Year Engineering Drawing Students</p>
+                  <p className="text-4xl font-black my-3 text-[#8B4513]">R374<span className="text-base font-medium">/month</span></p>
+                  <p className="text-sm text-gray-700 mb-4">Structured. Mentored. Unbeatable Value.</p>
+                </div>
+                <Button className="w-full bg-[#8B4513] text-white font-bold shadow-lg hover:shadow-xl transform group-hover:-translate-y-1 transition-transform" onClick={() => window.open('#','_blank')}>
+                  Join Cohort
+                </Button>
+              </div>
+
+              {/* BOOTCAMP */}
+              <div className="group relative border border-gray-400/50 rounded-2xl p-6 flex flex-col justify-between bg-gray-50/30 hover:bg-gray-50/70 hover:shadow-lg hover:scale-105 transition-all duration-300">
+                <div>
+                  <h4 className="font-extrabold text-xl text-gray-900">BOOTCAMP</h4>
+                  <p className="text-4xl font-black my-3 text-gray-700">Apply</p>
+                  <p className="text-sm text-gray-800 mb-4">Intensive. Personalized. Career-Changing.</p>
+                </div>
+                <Button variant="outline" className="w-full border-gray-400 text-gray-800 font-bold hover:bg-gray-200 transform group-hover:-translate-y-1 transition-transform" onClick={() => window.open('#','_blank')}>
+                  Apply Now
+                </Button>
+              </div>
             </div>
 
-            <blockquote className="mt-6 text-gray-800 italic font-medium">
-              “I teach skills, not guarantees. But if you bring the discipline, I’ll bring the blueprint.” — <span className="font-semibold">Samson Chrizeecry Senyatsi , please add thia edit as it is</span>
+            <blockquote className="mt-12 text-gray-800 italic font-semibold text-lg">
+              “I teach skills, not guarantees. But if you bring the discipline, I’ll bring the blueprint.”<br/>— <strong className="font-bold text-amber-800">Samson Chrizeecry Senyatsi</strong>
             </blockquote>
           </div>
         </div>

@@ -90,29 +90,36 @@ export function PricingSection({ onPlanSelect }: PricingSectionProps) {
             <div className="relative p-8 md:p-10 space-y-8">
               {/* Price Section */}
               <div className="space-y-4">
-                <h3 className="text-xl md:text-2xl font-600 text-gray-950">
+                <h3 className="text-2xl md:text-3xl font-800 tracking-tight text-gray-950">
                   {plan.name}
                 </h3>
 
-                <div className="space-y-2">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-700 tracking-tight text-gray-950">
+                <div className="space-y-3">
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-6xl md:text-7xl font-900 tracking-tighter bg-gradient-to-r from-[#FFD700] to-[#FF8C00] bg-clip-text text-transparent">
                       {plan.price}
                     </span>
                     {plan.originalPrice && (
-                      <span className="text-base text-gray-500 line-through font-500">
-                        {plan.originalPrice}
-                      </span>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-lg md:text-xl text-gray-400 line-through decoration-2 decoration-red-500 font-600">
+                          {plan.originalPrice}
+                        </span>
+                        <span className="text-xs font-bold text-red-600 uppercase tracking-widest">
+                          Was {plan.originalPrice}
+                        </span>
+                      </div>
                     )}
                   </div>
                   {plan.savings && (
-                    <p className="text-sm font-500 text-gray-600">
-                      {plan.savings}
-                    </p>
+                    <div className="inline-block bg-gradient-to-r from-lime-100 to-yellow-100 text-lime-800 px-4 py-2 rounded-full">
+                      <p className="text-sm font-bold">
+                        💚 {plan.savings}
+                      </p>
+                    </div>
                   )}
                 </div>
 
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className="text-base text-gray-700 leading-relaxed font-medium">
                   {plan.description}
                 </p>
               </div>
