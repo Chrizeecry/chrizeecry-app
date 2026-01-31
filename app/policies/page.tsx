@@ -5,7 +5,7 @@ export default function PoliciesPage() {
       <p><strong>Effective Date:</strong> 17 June 2025</p>
       <p>
         Welcome to Chrizeecry Collective (Pty) Ltd, operating through our website
-        <a href="https://chrizeecry.com" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer"> https://chrizeecry.com</a> ("Website"). By accessing or using our services — including educational memberships, music production tools, engineering content, and community features ("Services") — you agree to be bound by the following Terms and Conditions.
+        <a href="https://chrizeecry.com" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer"> https://chrizeecry.com</a> ("Website"). By accessing or using our services: including educational memberships, music production tools, engineering content, and community features ("Services"), you agree to be bound by the following Terms and Conditions.
       </p>
       <hr className="my-6" />
       <h2 className="text-2xl font-bold mt-8 mb-2">1. Company Information</h2>

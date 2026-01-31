@@ -16,6 +16,10 @@ import {
   GraduationCap,
   ExternalLink,
   MessageCircle,
+  FileText,
+  CheckCircle2,
+  Minus,
+  ChevronUp,
 } from "lucide-react"
 import Footer from "@/components/footer";
 import BlueprintHero from "@/components/blueprint-hero";
@@ -25,7 +29,20 @@ import CostOfInaction from "@/components/cost-of-inaction";
 export default function Page() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [showDiscountPopup, setShowDiscountPopup] = useState(false)
+  const [discountMinimized, setDiscountMinimized] = useState(false)
+  const [showCommunityPopup, setShowCommunityPopup] = useState(false)
+  const [communityMinimized, setCommunityMinimized] = useState(false)
+  const [showCookieConsent, setShowCookieConsent] = useState(false)
   const [selectedDivision, setSelectedDivision] = useState("")
+
+  useEffect(() => {
+    const consent = localStorage.getItem("cookie-consent")
+    if (!consent) {
+      const timer = setTimeout(() => setShowCookieConsent(true), 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [])
   const [showLeadForm, setShowLeadForm] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
@@ -35,16 +52,36 @@ export default function Page() {
     interests: [] as string[],
   })
 
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const [showScrollTop, setShowScrollTop] = useState(false)
+
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      const currentScrollY = window.scrollY
+      setScrolled(currentScrollY > 50)
+      setShowScrollTop(currentScrollY > 400)
+      
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+      if (scrollHeight > 0) {
+        const scrollPercent = (currentScrollY / scrollHeight) * 100
+        
+        // Stagger popups
+        if (scrollPercent > 20 && scrollPercent < 45) {
+          setShowDiscountPopup(true)
+        } else if (scrollPercent >= 45) {
+          setShowCommunityPopup(true)
+          // Auto-minimize the discount if community shows up to save space
+          setDiscountMinimized(true)
+        }
+      }
+      setLastScrollY(currentScrollY)
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => {
       window.removeEventListener("scroll", handleScroll)
     }
-  }, [])
+  }, [lastScrollY])
 
   const handleLeadCapture = (division: string) => {
     setSelectedDivision(division)
@@ -93,51 +130,52 @@ export default function Page() {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-6">
+            <nav className="hidden xl:flex items-center space-x-6">
               <button
                 onClick={() => scrollToSection("youtube-channels")}
-                className="flex items-center space-x-2 text-gray-700 hover:text-[#FFD700] transition-all duration-300 hover:scale-105 font-medium"
+                className="flex items-center space-x-2 text-gray-700 hover:text-[#FFD700] transition-all duration-300 font-bold px-2 py-1 hover:scale-105"
               >
                 <Youtube className="w-5 h-5" />
-                <span>My YouTube Channels</span>
+                <span>Channels</span>
               </button>
               <button
                 onClick={() => scrollToSection("about-founder")}
-                className="text-gray-700 hover:text-[#FFD700] transition-all duration-300 font-medium hover:scale-105"
+                className="text-gray-700 hover:text-[#FFD700] transition-all duration-300 font-bold px-2 py-1 hover:scale-105"
               >
-                About Founder
-              </button>
-              <button
-                onClick={() => scrollToSection("story")}
-                className="text-gray-700 hover:text-[#FFD700] transition-all duration-300 font-medium hover:scale-105"
-              >
-                My Story
+                About
               </button>
               <Button
-                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold px-6 py-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black uppercase text-xs tracking-widest px-6 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 border-b-4 border-orange-700"
                 onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
               >
-                ⭐ Join Mastery Cohort
+                ⭐ Join Bootcamp
               </Button>
               <a
                 href="https://collective.chrizeecry.com/meet-and-great-the-community"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-700 hover:text-[#FFD700] transition-all duration-300 font-medium hover:scale-105"
+                className="text-[#8B4513] hover:text-[#FFD700] font-black uppercase text-xs tracking-widest px-5 py-2.5 border-2 border-amber-200 rounded-full hover:bg-amber-50 transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm"
               >
                 Free Community
               </a>
             </nav>
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
+            {/* Mobile/Tablet Menu Button */}
+            <div className="xl:hidden flex items-center space-x-4">
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold px-4 py-2 rounded-full shadow-md text-xs sm:text-sm"
+                onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
+              >
+                ⭐ Join
+              </Button>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setMobileNavOpen(true)}
                 className="text-gray-700 hover:text-[#FFD700] hover:bg-amber-50"
               >
-                <Menu className="h-6 w-6" />
+                <Menu className="h-7 w-7" />
               </Button>
             </div>
           </div>
@@ -157,31 +195,42 @@ export default function Page() {
             <nav className="p-6 space-y-6">
               <button
                 onClick={() => scrollToSection("youtube-channels")}
-                className="flex items-center space-x-3 text-gray-700 hover:text-[#FFD700] transition-colors w-full text-left"
+                className="flex items-center space-x-3 text-gray-700 hover:text-[#FFD700] transition-colors w-full text-left py-3 min-h-[48px]"
               >
-                <Youtube className="w-5 h-5" />
-                <span>My YouTube Channels</span>
+                <Youtube className="w-6 h-6" />
+                <span className="text-lg">My YouTube Channels</span>
               </button>
               <button
                 onClick={() => scrollToSection("about-founder")}
-                className="block text-gray-700 hover:text-[#FFD700] transition-colors w-full text-left"
+                className="block text-gray-700 hover:text-[#FFD700] transition-colors w-full text-left py-3 min-h-[48px] text-lg"
               >
                 About Founder
               </button>
               <button
                 onClick={() => scrollToSection("story")}
-                className="block text-gray-700 hover:text-[#FFD700] transition-colors w-full text-left"
+                className="block text-gray-700 hover:text-[#FFD700] transition-colors w-full text-left py-3 min-h-[48px] text-lg"
               >
                 My Story
               </button>
-              <a
-                href="https://collective.chrizeecry.com/meet-and-great-the-community"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block bg-gradient-to-r from-[#FFD700] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#FFD700] text-[#8B4513] font-bold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl text-center w-full"
-              >
-                🚀 Join Collective
-              </a>
+              <div className="pt-6 space-y-4">
+                <a
+                  href="https://nas.io/chrizeecry-complete-collective-vault-premium"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black uppercase text-sm tracking-widest px-6 py-4 rounded-xl transition-all shadow-lg text-center w-full"
+                >
+                  ⭐ Join Bootcamp
+                </a>
+                <a
+                  href="https://collective.chrizeecry.com/meet-and-great-the-community"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-amber-50 border-2 border-amber-200 text-[#8B4513] font-black uppercase text-sm tracking-widest px-6 py-4 rounded-xl transition-all text-center w-full"
+                >
+                  🚀 Free Community
+                  <span className="block text-[10px] font-bold mt-1 opacity-80 italic">Notes, Freebies & Study Guides</span>
+                </a>
+              </div>
             </nav>
           </div>
         </div>
@@ -194,7 +243,7 @@ export default function Page() {
             <div className="space-y-8">
               <div className="space-y-6">
                 <Badge className="bg-gradient-to-r from-[#FFD700] to-[#FF8C00] text-[#8B4513] hover:scale-105 transition-transform duration-300 px-4 py-2 text-sm font-semibold shadow-lg">
-                  🚀 From Exclusion to Excellence
+                  🚀 From Academic Exclusion to Engineering Excellence
                 </Badge>
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
                   Where{" "}
@@ -205,15 +254,14 @@ export default function Page() {
                   Meets Purpose
                 </h1>
                 <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl">
-                  An 8-year journey through engineering that became a masterclass in resilience. Now helping 2,500+
-                  students transform their futures through proven methods and real-world expertise.
+                 A 4-year Honours Degree completed in 8 years. What started as a lonely journey became a masterclass in resilience. I am a Wits Civil Engineer bridging the gap between ACADEMIC FAILURE and S.T.E.M mastery for aspiring South African Civil Engineers
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-[#FFD700] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#FFD700] text-[#8B4513] font-bold px-8 py-4 text-lg hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
+                  className="w-full sm:w-auto bg-gradient-to-r from-[#FFD700] to-[#FF8C00] hover:from-[#FF8C00] hover:to-[#FFD700] text-[#8B4513] font-bold px-8 py-4 text-base md:text-lg hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl"
                   onClick={() => scrollToSection("community")}
                 >
                   Discover My Methods
@@ -222,7 +270,7 @@ export default function Page() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="px-8 py-4 text-lg border-2 border-[#8B4513] text-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-all duration-300 hover:scale-105"
+                  className="w-full sm:w-auto px-8 py-4 text-base md:text-lg border-2 border-[#8B4513] text-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-all duration-300 hover:scale-105"
                   onClick={() => scrollToSection("about-founder")}
                 >
                   <Play className="mr-2 w-6 h-6" />
@@ -233,22 +281,22 @@ export default function Page() {
               <div className="grid grid-cols-3 gap-8 pt-8">
                 <div className="text-center group cursor-pointer">
                   <div className="text-3xl md:text-4xl font-bold text-[#FFD700] group-hover:scale-110 transition-transform duration-300">
-                    5,571+
+                    6930+
                   </div>
-                  <div className="text-sm text-gray-600 font-medium">Social Followers</div>
+                  <div className="text-sm text-gray-600 font-medium">Social Media Followers</div>
                 </div>
                 <div className="text-center group cursor-pointer">
                   <div className="flex items-center justify-center space-x-1 group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-3xl md:text-4xl font-bold text-[#FFD700]">4.9</span>
+                    <span className="text-3xl md:text-4xl font-bold text-[#FFD700]">90%</span>
                     <Star className="w-6 h-6 text-[#FFD700] fill-current" />
                   </div>
-                  <div className="text-sm text-gray-600 font-medium">Success Rating</div>
+                  <div className="text-sm text-gray-600 font-medium">Civil Technology Grade 12 [2013] </div>
                 </div>
                 <div className="text-center group cursor-pointer">
                   <div className="text-3xl md:text-4xl font-bold text-[#FFD700] group-hover:scale-110 transition-transform duration-300">
                     8
                   </div>
-                  <div className="text-sm text-gray-600 font-medium">Years of Grit</div>
+                  <div className="text-sm text-gray-600 font-medium">Years of Grit Engineering</div>
                 </div>
               </div>
             </div>
@@ -257,7 +305,7 @@ export default function Page() {
               <div className="relative z-10 transform hover:scale-105 transition-transform duration-500">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/grad%20pic%20samson.jpg-1gOwd24ULEaLsbj1yFL85Ir8l2uWk9.jpeg"
-                  alt="Samson Senyatsi graduation day - The moment of triumph after 8 years"
+                  alt="Samson Senyatsi graduation day: The moment of triumph after 8 years"
                   className="rounded-3xl shadow-2xl w-full max-w-2xl mx-auto"
                 />
                 <div className="absolute -bottom-8 -right-8 bg-white rounded-2xl p-6 shadow-xl border-2 border-[#FFD700] max-w-xs">
@@ -267,7 +315,7 @@ export default function Page() {
                     </div>
                     <div>
                       <div className="font-bold text-gray-900 text-lg">BSc Civil Engineering</div>
-                      <div className="text-sm text-gray-600">Wits University • 2021</div>
+                      <div className="text-sm text-gray-600">Wits University, 2021</div>
                       <div className="text-xs text-[#FFD700] font-semibold">Against All Odds</div>
                     </div>
                   </div>
@@ -286,8 +334,8 @@ export default function Page() {
             <Badge className="bg-[#8B4513] text-white px-4 py-2 text-sm font-semibold">👨‍🎓 About the Founder</Badge>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900">The Man Behind the Mission</h2>
             <blockquote className="text-2xl md:text-3xl font-bold text-gray-700 max-w-4xl mx-auto leading-relaxed italic">
-              "They told me I wouldn't make it. But eight years later, I walked out with an engineering degree from Wits
-              — not just with a certificate, but with a spine forged through fire."
+              "They told me I wouldn't make it. But eight years later, I walked out with an engineering degree from Wits:
+              not just with a certificate, but with a spine forged through fire."
             </blockquote>
           </div>
 
@@ -296,7 +344,7 @@ export default function Page() {
             <div className="relative max-w-4xl mx-auto">
               <img
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2021_12_27_15_23_IMG_4146.JPG-YN6RCCweaXEPk5ryint1Hf3lDKdGsm.jpeg"
-                alt="Samson Senyatsi as a professional engineer - Working on construction site with engineering equipment"
+                alt="Samson Senyatsi as a professional engineer: Working on construction site with engineering equipment"
                 className="w-full rounded-3xl shadow-2xl"
               />
               <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl p-6">
@@ -334,9 +382,52 @@ export default function Page() {
               <div className="relative">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-06-02%20203756-ae0p8KueA4SQaGbSeaLA8ION6iPWD7.png"
-                  alt="Young Samson with fellow students - High school dreams"
+                  alt="Young Samson with fellow students: High school dreams"
                   className="w-full rounded-2xl shadow-xl"
                 />
+              </div>
+            </div>
+
+            {/* Mentor's Note: The Big Brother Perspective */}
+            <div className="bg-slate-900 text-white rounded-3xl p-8 md:p-12 border-4 border-amber-500 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 blur-[100px] -z-0" />
+              <div className="relative z-10">
+                <div className="flex items-center space-x-4 mb-6">
+                  <div className="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center">
+                    <span className="text-2xl">🤝</span>
+                  </div>
+                  <h3 className="text-3xl font-black uppercase italic tracking-tighter">A Word From Your "Big Brother"</h3>
+                </div>
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                  <div className="space-y-4">
+                    <p className="text-lg text-slate-300 leading-relaxed italic">
+                      "I'm not just here to teach you how to draw an Isometric view or solve a Calculus integral. I'm here because I've been exactly where you are."
+                    </p>
+                    <p className="text-slate-400">
+                      Whether you're shy, feel like you're 'not cool', or you're a junior engineer struggling to find your footing—I am your partner in this transformation. 
+                    </p>
+                    <p className="text-slate-400">
+                      My mission is to help you unlock monetary skills and personal branding that make you indispensable, even if you're the quietest person in the room. You don't need to be loud to be a leader; you just need the right systems and the grit to follow through.
+                    </p>
+                  </div>
+                  <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl space-y-4">
+                    <h4 className="text-xl font-bold text-amber-500">Why I Consult:</h4>
+                    <ul className="space-y-3">
+                      <li className="flex items-start space-x-3">
+                        <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-slate-300">Unlock high-income technical & creator skills</span>
+                      </li>
+                      <li className="flex items-start space-x-3">
+                        <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-slate-300">Build a personal brand that attracts opportunities</span>
+                      </li>
+                      <li className="flex items-start space-x-3">
+                        <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span className="text-sm text-slate-300">Navigate the 'nonlinear' path of engineering & life</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -359,7 +450,7 @@ export default function Page() {
                   </p>
                   <p className="text-gray-700 leading-relaxed">
                     This balance between professional excellence and personal fulfillment is something I teach my
-                    students and mentees. Success isn't just about academic achievement—it's about becoming the best
+                    students and mentees. Success isn't just about academic achievement; it's about becoming the best
                     version of yourself in all areas of life.
                   </p>
                 </div>
@@ -407,7 +498,7 @@ export default function Page() {
                   <p className="text-gray-700 leading-relaxed mb-4">
                     I still remember the email. "Dear Student, We regret to inform you..." My heart sank as I read the
                     words that confirmed my worst fear: I had been academically excluded. All the sacrifices my family
-                    had made, all the expectations from my community — it felt like I had let everyone down.
+                    had made, all the expectations from my community, it felt like I had let everyone down.
                   </p>
                   <p className="text-gray-700 leading-relaxed mb-4">
                     That night, sitting alone in my small room, I faced the darkest moment of my journey. I had two
@@ -430,7 +521,7 @@ export default function Page() {
                   </p>
                   <p className="text-gray-700 leading-relaxed">
                     When I was granted a second chance, I approached university differently. I created a strict
-                    schedule, formed study groups, and started tutoring other students — teaching concepts helped cement
+                    schedule, formed study groups, and started tutoring other students: teaching concepts helped cement
                     my own understanding. Each small victory rebuilt my confidence.
                   </p>
                 </div>
@@ -453,7 +544,7 @@ export default function Page() {
                 <div>
                   <p className="text-gray-700 leading-relaxed mb-4">
                     What I didn't expect was how this struggle would transform me beyond academics. I developed
-                    resilience that no comfortable journey could have taught me. I learned to ask for help — something
+                    resilience that no comfortable journey could have taught me. I learned to ask for help: something
                     my pride had prevented before. I discovered that failure isn't final unless you allow it to be.
                   </p>
                 </div>
@@ -477,7 +568,7 @@ export default function Page() {
                     the same one who had entered university with naive confidence years before.
                   </p>
                   <p className="text-gray-700 leading-relaxed">
-                    That day wasn't just about academic achievement — it was about proving that determination can
+                    That day wasn't just about academic achievement, it was about proving that determination can
                     overcome almost any obstacle. The degree was valuable, but the journey to earn it was priceless.
                   </p>
                 </div>
@@ -496,11 +587,11 @@ export default function Page() {
               <h3 className="text-2xl font-bold mb-6">The Legacy: Chrizeecry Collective</h3>
               <p className="text-lg mb-6 max-w-4xl mx-auto">
                 Today, everything I build through Chrizeecry Collective is informed by this journey. I don't just teach
-                technical skills — I help people develop the mindset to overcome their own challenges. The methods I
+                technical skills, I help people develop the mindset to overcome their own challenges. The methods I
                 share aren't theoretical; they're battle-tested through my own failures and comebacks.
               </p>
               <p className="text-yellow-100 max-w-4xl mx-auto">
-                My story isn't unique — many face similar obstacles. But by sharing it honestly, I hope to show others
+                My story isn't unique, many face similar obstacles. But by sharing it honestly, I hope to show others
                 that their current struggles don't define their ultimate potential. Sometimes, the longest, most
                 difficult path leads to the most meaningful destination.
               </p>
@@ -511,10 +602,10 @@ export default function Page() {
               <h3 className="text-2xl font-bold mb-6">The Philosophy That Drives Everything</h3>
               <blockquote className="text-xl md:text-2xl font-bold mb-6 leading-relaxed">
                 "I'm that engineer who endures at every level. I thrive under pressure and stand tall like the sun in
-                the sky — always shining, no matter what."
+                the sky: always shining, no matter what."
               </blockquote>
               <p className="text-lg text-yellow-100 max-w-3xl mx-auto">
-                This journey from exclusion to engineer isn't just my story — it's proof that with the right mindset,
+                This journey from exclusion to engineer isn't just my story, it's proof that with the right mindset,
                 systems, and persistence, anyone can overcome seemingly impossible obstacles. That's why I've built
                 Chrizeecry Collective: to share these battle-tested methods with others who refuse to give up on their
                 dreams.
@@ -576,11 +667,11 @@ export default function Page() {
       <section id="youtube-channels" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center space-y-6 mb-16">
-            <Badge className="bg-red-600 text-white px-4 py-2 text-sm font-semibold">📺 Multi-Channel Creator</Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">My YouTube Universe</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Educational content across multiple channels, reaching thousands of learners worldwide. Subscribe to all
-              channels for the complete experience!
+            <Badge className="bg-red-600 text-white px-4 py-2 text-sm font-semibold uppercase tracking-widest">📺 The Technical Beat Universe</Badge>
+            <h2 className="text-4xl md:text-5xl font-black text-gray-900 uppercase italic">Beats to Study Civil Engineering To</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-medium">
+              Technical study beats designed for deep focus. 
+              From Euclidean geometry logic to AfroSoul Amapiano: we build bridges with sound.
             </p>
           </div>
 
@@ -589,36 +680,36 @@ export default function Page() {
             <div className="relative group">
               <img
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%40chrizeecry-swxrDdCYNHnILa1lZOwSgd61gMGXn9.png"
-                alt="Chrizeecry YouTube Channel - Main lifestyle and music channel"
+                alt="Chrizeecry YouTube Channel - Study Beats & STEM Mentorship"
                 className="w-full rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform group-hover:scale-105"
               />
-              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl p-4">
-                <h5 className="font-bold text-[#8B4513] mb-1">Main Channel</h5>
-                <p className="text-sm text-gray-700">241 subscribers • 275 videos • Lifestyle & Music</p>
+              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl p-4 border-l-4 border-amber-500 shadow-lg">
+                <h5 className="font-bold text-[#8B4513] mb-1">Study Beats & Mentorship</h5>
+                <p className="text-sm text-gray-700">264 subscribers • 336 videos • Engineering Study Beats</p>
               </div>
             </div>
 
             <div className="relative group">
               <img
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%40chris_senyatsi%20maths-EG67j3NVSXVifYdpkJgXCfgtM7PM2J.png"
-                alt="Chris Senyatsi Math Tutor YouTube Channel - Educational mathematics content"
+                alt="Chris Senyatsi Math Tutor YouTube Channel - Grade 8-12 NSC Maths"
                 className="w-full rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform group-hover:scale-105"
               />
-              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl p-4">
-                <h5 className="font-bold text-[#8B4513] mb-1">Math Tutor Channel</h5>
-                <p className="text-sm text-gray-700">658 subscribers • 75 videos • Mathematics Education</p>
+              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl p-4 border-l-4 border-green-500 shadow-lg">
+                <h5 className="font-bold text-[#8B4513] mb-1">Math Academy Channel</h5>
+                <p className="text-sm text-gray-700">931 subscribers • 107 videos • Technical Math Hacks</p>
               </div>
             </div>
 
             <div className="relative group">
               <img
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%40chrizeecrybeats-k8pjMxeBtxsMfs45pJVzdNXsaZvrwS.png"
-                alt="Chrizeecry Beats YouTube Channel - Music production and beats"
+                alt="Chrizeecry Beats YouTube Channel - Technical Beats & Samples"
                 className="w-full rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform group-hover:scale-105"
               />
-              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl p-4">
-                <h5 className="font-bold text-[#8B4513] mb-1">Beats Channel</h5>
-                <p className="text-sm text-gray-700">159 subscribers • 23 videos • Music Production</p>
+              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl p-4 border-l-4 border-blue-500 shadow-lg">
+                <h5 className="font-bold text-[#8B4513] mb-1">Technical Beats Vault</h5>
+                <p className="text-sm text-gray-700">159 subscribers • 23 videos • FL Studio & AI Beats</p>
               </div>
             </div>
           </div>
@@ -632,22 +723,22 @@ export default function Page() {
                     <Youtube className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-lg">Chrizeecry</CardTitle>
-                    <p className="text-sm text-gray-600">Lifestyle & Journey</p>
+                    <CardTitle className="text-lg font-black uppercase">Chrizeecry: Personal Brand</CardTitle>
+                    <p className="text-sm text-gray-600 font-bold uppercase tracking-widest text-[10px]">Grade 8-12 Online Mentorship</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-center mb-4">
                   <div>
-                    <div className="text-2xl font-bold text-red-600">240</div>
-                    <div className="text-sm text-gray-600">Subscribers</div>
+                    <div className="text-2xl font-black text-gray-900 tracking-tighter">264</div>
+                    <div className="text-[10px] font-black uppercase text-gray-500">Subscribers</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-red-600">275</div>
-                    <div className="text-sm text-gray-600">Videos</div>
+                    <div className="text-2xl font-black text-gray-900 tracking-tighter">336</div>
+                    <div className="text-[10px] font-black uppercase text-gray-500">Videos</div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-700 mb-4">
-                  Lifestyle, music videos, and personal journey documentation since 2016
+                <p className="text-sm text-gray-700 mb-4 font-medium italic border-l-2 border-amber-500 pl-3">
+                  Original technical beats (AfroSoul, Amapiano, Trap) for focus, mixed with STEM vlogs, My Wits Vlogs, Who is Sello Senyatsi: From Maranatha Day Care, Mahobotle Primary School, Ramoabi Middle School, Mmankala Technical High School, Wits University, Work Now The Founder of Chrizeecry Collective Pty Ltd.
                 </p>
               </CardHeader>
               <CardContent>
@@ -670,22 +761,22 @@ export default function Page() {
                     <Calculator className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-lg">Chris Senyatsi - Math Tutor</CardTitle>
-                    <p className="text-sm text-gray-600">Mathematics Education</p>
+                    <CardTitle className="text-lg font-black uppercase">Chris Senyatsi: Civil Engineer</CardTitle>
+                    <p className="text-sm text-gray-600 font-bold uppercase tracking-widest text-[10px]">Tech Drawing, Maths & Science</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-center mb-4">
                   <div>
-                    <div className="text-2xl font-bold text-green-600">661</div>
-                    <div className="text-sm text-gray-600">Subscribers</div>
+                    <div className="text-2xl font-black text-gray-900 tracking-tighter">931</div>
+                    <div className="text-[10px] font-black uppercase text-gray-500">Subscribers</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-green-600">85,871</div>
-                    <div className="text-sm text-gray-600">Total Views</div>
+                    <div className="text-2xl font-black text-gray-900 tracking-tighter">150,389</div>
+                    <div className="text-[10px] font-black uppercase text-gray-500">Total Views</div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-700 mb-4">
-                  75 videos • Simplifying mathematics for high school students with visual learning techniques
+                <p className="text-sm text-gray-700 mb-4 font-medium italic border-l-2 border-green-500 pl-3">
+                  107 videos • Battle-tested strategies for Euclidean Geometry, Calculus, and Technical Maths and Physical Sciences.
                 </p>
               </CardHeader>
               <CardContent>
@@ -700,41 +791,41 @@ export default function Page() {
               </CardContent>
             </Card>
 
-            {/* Music Channel */}
-            <Card className="group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-0 bg-gradient-to-br from-purple-50 to-white">
+            {/* Beats Channel */}
+            <Card className="group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-0 bg-white shadow-xl">
               <CardHeader>
                 <div className="flex items-center space-x-3 mb-4">
-                  <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <Music className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-lg">Chrizeecry Beats</CardTitle>
-                    <p className="text-sm text-gray-600">Music Production</p>
+                    <CardTitle className="text-lg font-black uppercase">Chrizeecry: Musician</CardTitle>
+                    <p className="text-sm text-gray-600 font-bold uppercase tracking-widest text-[10px]">Technical Study Beats</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-center mb-4">
                   <div>
-                    <div className="text-2xl font-bold text-purple-600">159</div>
-                    <div className="text-sm text-gray-600">Subscribers</div>
+                    <div className="text-2xl font-black text-gray-900 tracking-tighter">159</div>
+                    <div className="text-[10px] font-black uppercase text-gray-500">Subscribers</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-purple-600">27,572</div>
-                    <div className="text-sm text-gray-600">Total Views</div>
+                    <div className="text-2xl font-black text-gray-900 tracking-tighter">27,572</div>
+                    <div className="text-[10px] font-black uppercase text-gray-500">Total Views</div>
                   </div>
                 </div>
-                <p className="text-sm text-gray-700 mb-4">
-                  23 videos • Professional beats and music production tutorials for aspiring producers
+                <p className="text-sm text-gray-700 mb-4 font-medium italic border-l-2 border-blue-500 pl-3">
+                  23 videos • Technical study beats for engineers: AfroSoul, Amapiano, and FL Studio technicals.
                 </p>
               </CardHeader>
               <CardContent>
                 <Button
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white mb-2"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white mb-2 font-bold uppercase"
                   onClick={() => window.open("https://youtube.com/@chrizeecrybeats", "_blank")}
                 >
                   <Music className="mr-2 w-4 h-4" />
-                  Subscribe & Create
+                  Get Beats
                 </Button>
-                <p className="text-xs text-gray-500 text-center">Joined Jun 27, 2022</p>
+                <p className="text-[10px] text-gray-400 text-center font-bold tracking-widest uppercase">Sample Packs & FLP drops</p>
               </CardContent>
             </Card>
           </div>
@@ -754,7 +845,7 @@ export default function Page() {
                 </div>
                 <CardContent className="p-4">
                   <h4 className="font-bold text-gray-900 mb-2">Most Popular Math Tutorial</h4>
-                  <p className="text-sm text-gray-600">33K+ views • Breaking down complex concepts simply</p>
+                  <p className="text-sm text-gray-600">56K+ views • Breaking down complex concepts simply</p>
                 </CardContent>
               </Card>
 
@@ -769,7 +860,7 @@ export default function Page() {
                 </div>
                 <CardContent className="p-4">
                   <h4 className="font-bold text-gray-900 mb-2">Music Production Talent</h4>
-                  <p className="text-sm text-gray-600">Showcasing my other passion - creating beats and music</p>
+                  <p className="text-sm text-gray-600">Showcasing my other passion: creating beats and music</p>
                 </CardContent>
               </Card>
             </div>
@@ -780,17 +871,17 @@ export default function Page() {
             <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">Total YouTube Impact</h3>
             <div className="grid md:grid-cols-4 gap-8">
               <div className="text-center">
-                <div className="text-4xl font-bold text-[#FFD700] mb-2">1,060</div>
+                <div className="text-4xl font-bold text-[#FFD700] mb-2">1,348</div>
                 <div className="text-gray-600 font-medium">Total Subscribers</div>
                 <div className="text-sm text-gray-500">Across all channels</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-[#FFD700] mb-2">113,443</div>
+                <div className="text-4xl font-bold text-[#FFD700] mb-2">178,009</div>
                 <div className="text-gray-600 font-medium">Total Views</div>
                 <div className="text-sm text-gray-500">Educational impact</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-[#FFD700] mb-2">373</div>
+                <div className="text-4xl font-bold text-[#FFD700] mb-2">489</div>
                 <div className="text-gray-600 font-medium">Total Videos</div>
                 <div className="text-sm text-gray-500">Content library</div>
               </div>
@@ -1008,12 +1099,12 @@ export default function Page() {
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-2xl border border-blue-200">
                 <h3 className="text-2xl font-bold text-[#8B4513] mb-4">The Learning Never Stopped</h3>
                 <p className="text-gray-700 leading-relaxed mb-4">
-                  Even during the most challenging academic periods, I was constantly learning - not just from
+                  Even during the most challenging academic periods, I was constantly learning: not just from
                   textbooks, but from every practical experience, every setback, and every small victory. The
                   combination of academic rigor and real-world application shaped my understanding of engineering.
                 </p>
                 <p className="text-gray-700 leading-relaxed">
-                  These experiences taught me that engineering isn't just about calculations and designs - it's about
+                  These experiences taught me that engineering isn't just about calculations and designs: it's about
                   problem-solving, persistence, and the ability to adapt when things don't go according to plan.
                 </p>
               </div>
@@ -1044,7 +1135,7 @@ export default function Page() {
                   engineering studies.
                 </p>
                 <p className="text-gray-700 leading-relaxed">
-                  This creative side didn't compete with my engineering aspirations - it complemented them. The
+                  This creative side didn't compete with my engineering aspirations; it complemented them. The
                   discipline required for music production taught me patience and attention to detail that directly
                   benefited my technical work.
                 </p>
@@ -1131,7 +1222,7 @@ export default function Page() {
                 </p>
                 <p className="text-gray-700 leading-relaxed mb-4">
                   Today, I am a full-time digital influencer and educational entrepreneur under my company CHRIZEECRY COLLECTIVE (PTY) LTD (Enterprise Number: 2025/308227/07). Chrizeecry Collective transforms lives
-                  through engineering expertise, mathematics education, music production, and timeless wisdom—built on 8 years of persistence and proven by thousands of success stories.
+                  through engineering expertise, mathematics education, music production, and timeless wisdom: built on 8 years of persistence and proven by thousands of success stories.
                 </p>
                 <blockquote className="text-green-800 italic font-medium border-l-4 border-green-500 pl-4">
                   "My academic journey prepared me perfectly for real-world challenges, but my true calling emerged in
@@ -1214,7 +1305,7 @@ export default function Page() {
               <p className="text-gray-800 mb-4"><strong>Content → Community → Creation → Capital.</strong> Stop chasing degrees. Start building value.</p>
               <ul className="list-disc pl-5 space-y-2 text-gray-700">
                 <li><strong>Beyond the Certificate:</strong> Your NQF 8 (honours-level) matters less than your portfolio. Build a "Public Resume" that gets you noticed.</li>
-                <li><strong>The Business of Engineering:</strong> Learn what universities don't teach—negotiation, project management, and personal branding.</li>
+                <li><strong>The Business of Engineering:</strong> Learn what universities don't teach: negotiation, project management, and personal branding.</li>
               </ul>
             </div>
           </div>
@@ -1235,8 +1326,23 @@ export default function Page() {
                   <p className="text-gray-700 mt-1">Both. The principles are foundational, whether you're aiming for a Matric distinction or surviving First Year.</p>
                 </div>
                 <div className="bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 p-4">
-                  <h4 className="font-bold text-gray-900">"What if I need 1-on-1 help or private video call zoom consultation?"</h4>
-                  <p className="text-gray-700 mt-1">Join the <strong>Distinction Bootcamp</strong>. It's capped for personal feedback on your career and technical projects.</p>
+                  <h4 className="font-bold text-gray-900">"What if I need 1-on-1 help or private consultation?"</h4>
+                  <p className="text-gray-700 mt-1">Join the <strong>Direct Mentorship</strong> (Elite Transformation). I'll be your partner in unlocking your professional and monetary future.</p>
+                </div>
+                <div className="bg-white/50 backdrop-blur-lg rounded-xl border border-white/30 p-4">
+                  <h4 className="font-bold text-gray-900">"Can I get a refund?"</h4>
+                  <p className="text-gray-700 mt-1">Since all our resources are digital and immediate, <strong>we do not offer money-back guarantees</strong>. However, if you're not satisfied, we'll give you an extra month free or extra support to ensure you get value.</p>
+                </div>
+                <div className="bg-amber-100/50 backdrop-blur-lg rounded-xl border border-amber-300 p-4 text-center">
+                  <h4 className="font-bold text-amber-900">Have a suggestion or found a bug?</h4>
+                  <p className="text-amber-800 text-sm mt-1 mb-3">We're always building. Tell us how to improve this site or our programs.</p>
+                  <Button 
+                    variant="outline" 
+                    className="border-amber-500 text-amber-700 hover:bg-amber-500 hover:text-white font-bold"
+                    onClick={() => window.open("https://wa.me/27736043894?text=Hi%20Chris,%20I%20have%20a%20suggestion%20for%20your%20website/program...", "_blank")}
+                  >
+                    Send Feedback
+                  </Button>
                 </div>
             </div>
           </div>
@@ -1263,8 +1369,8 @@ export default function Page() {
               <div className="group relative border-2 border-[#8B4513] rounded-2xl p-6 flex flex-col justify-between bg-[#8B4513]/10 hover:bg-[#8B4513]/20 shadow-xl scale-105 hover:scale-110 transition-all duration-300">
                 <div className="absolute -top-3 right-4 bg-gradient-to-r from-[#8B4513] to-amber-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">BEST VALUE</div>
                 <div>
-                  <h4 className="font-extrabold text-xl text-[#8B4513]">THE CIVIL TECH & EGD MASTERY COHORT</h4>
-                  <p className="text-sm text-gray-600 mb-2">For Technical High Schoolers & First Year Engineering Drawing Students</p>
+                  <h4 className="font-extrabold text-xl text-[#8B4513]">THE MASTERY COHORT</h4>
+                  <p className="text-sm text-gray-600 mb-2">For Technical High Schoolers & Junior Engineers seeking technical dominance</p>
                   <p className="text-4xl font-black my-3 text-[#8B4513]">R374<span className="text-base font-medium">/month</span></p>
                   <p className="text-sm text-gray-700 mb-4">Structured. Mentored. Unbeatable Value.</p>
                 </div>
@@ -1273,21 +1379,21 @@ export default function Page() {
                 </Button>
               </div>
 
-              {/* BOOTCAMP */}
+              {/* DIRECT MENTORSHIP */}
               <div className="group relative border border-gray-400/50 rounded-2xl p-6 flex flex-col justify-between bg-gray-50/30 hover:bg-gray-50/70 hover:shadow-lg hover:scale-105 transition-all duration-300">
                 <div>
-                  <h4 className="font-extrabold text-xl text-gray-900">BOOTCAMP</h4>
+                  <h4 className="font-extrabold text-xl text-gray-900">DIRECT MENTORSHIP</h4>
                   <p className="text-4xl font-black my-3 text-gray-700">Apply</p>
-                  <p className="text-sm text-gray-800 mb-4">Intensive. Personalized. Career-Changing.</p>
+                  <p className="text-sm text-gray-800 mb-4">Intensive. Personal. Life-Changing.</p>
                 </div>
-                <Button variant="outline" className="w-full border-gray-400 text-gray-800 font-bold hover:bg-gray-200 transform group-hover:-translate-y-1 transition-transform" onClick={() => window.open('#','_blank')}>
+                <Button variant="outline" className="w-full border-gray-400 text-gray-800 font-bold hover:bg-gray-200 transform group-hover:-translate-y-1 transition-transform" onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}>
                   Apply Now
                 </Button>
               </div>
             </div>
 
             <blockquote className="mt-12 text-gray-800 italic font-semibold text-lg">
-              “I teach skills, not guarantees. But if you bring the discipline, I’ll bring the blueprint.”<br/>— <strong className="font-bold text-amber-800">Samson Chrizeecry Senyatsi</strong>
+              “I teach skills, not guarantees. But if you bring the discipline, I’ll bring the blueprint.”<br/> <strong className="font-bold text-amber-800">Samson Chrizeecry Senyatsi</strong>
             </blockquote>
           </div>
         </div>
@@ -1350,14 +1456,14 @@ export default function Page() {
                     my genuine desire to help others succeed.
                   </p>
                   <p className="text-gray-700 leading-relaxed mb-4">
-                    Her recommendation for me to become a Lead Mentor wasn't just about my academic performance—it was 
+                    Her recommendation for me to become a Lead Mentor wasn't just about my academic performance, it was 
                     about my character, my persistence, and my ability to connect with struggling students. She saw 
                     that my journey through adversity had given me something valuable: the ability to understand and 
                     guide others through their own challenges.
                   </p>
                   <blockquote className="text-blue-800 italic font-medium border-l-4 border-blue-500 pl-4">
                     "Ms. Itumeleng, your belief in me when I couldn't believe in myself changed everything. You didn't 
-                    just see my potential—you created opportunities for me to discover it. Thank you for being the 
+                    just see my potential: you created opportunities for me to discover it. Thank you for being the 
                     bridge between my struggles and my purpose."
                   </blockquote>
                 </div>
@@ -1388,7 +1494,7 @@ export default function Page() {
                 <div>
                   <p className="text-gray-700 leading-relaxed mb-4">
                     Through Ms. Itumeleng's recommendation, I was introduced to <a href="https://amrutfoundation.org.za/about/" target="_blank" rel="noopener noreferrer">Hemang</a> and the Amrut Foundation. 
-                    What started as financial support evolved into something much more meaningful—a partnership in 
+                    What started as financial support evolved into something much more meaningful: a partnership in 
                     community development and social impact.
                   </p>
                   <p className="text-gray-700 leading-relaxed mb-4">
@@ -1399,13 +1505,13 @@ export default function Page() {
                 </div>
                 <div>
                   <p className="text-gray-700 leading-relaxed mb-4">
-                    This wasn't just about completing a project—it was about understanding that engineering skills 
+                    This wasn't just about completing a project: it was about understanding that engineering skills 
                     could directly improve lives. Every plant we grew, every structure we built, represented hope 
                     and sustenance for families in need.
                   </p>
                   <blockquote className="text-orange-800 italic font-medium border-l-4 border-orange-500 pl-4">
                     "Much thanks to Amrut Foundation for awakening our spirits and showing us that success is not 
-                    just about personal achievement—it's about lifting others as we climb."
+                    just about personal achievement; it's about lifting others as we climb."
                   </blockquote>
                 </div>
               </div>
@@ -1435,7 +1541,7 @@ export default function Page() {
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-8 rounded-2xl border border-green-200">
                   <h3 className="text-2xl font-bold text-[#8B4513] mb-4">Beyond Projects: Community Safety & Care</h3>
                   <p className="text-gray-700 leading-relaxed mb-4">
-                    My commitment to community extended beyond professional projects. Living in Lefatlheng (Mathibestad), Hammanskraal, in the far north of Pretoria—opposite Sempapa Secondary School—I witnessed the challenges our community faced daily. Crime, theft, and mugging were unfortunate realities that affected our neighbors, especially women walking to work in the early morning hours.
+                    My commitment to community extended beyond professional projects. Living in Lefatlheng (Mathibestad), Hammanskraal, in the far north of Pretoria, opposite Sempapa Secondary School, I witnessed the challenges our community faced daily. Crime, theft, and mugging were unfortunate realities that affected our neighbors, especially women walking to work in the early morning hours.
 
                     When I saw community members organizing cleaning initiatives and safety patrols, I knew I had to join them. Having been supported by the Wits community and broader networks, I felt a responsibility to give back to my own neighborhood. Together, we worked to clean our streets and create a safer environment for everyone, understanding that dignity and safety go hand in hand.
                   </p>
@@ -1466,17 +1572,17 @@ export default function Page() {
                 <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-8 rounded-2xl border border-green-200">
                   <h3 className="text-2xl font-bold text-[#8B4513] mb-4">Community Integration & Friendship</h3>
                   <p className="text-gray-700 leading-relaxed mb-4">
-                    Working in Burgersfort wasn't just about engineering—it was about building relationships and understanding 
+                    Working in Burgersfort wasn't just about engineering; it was about building relationships and understanding 
                     the local culture. My friends Hendrick Mashaba and T Bone Steak became like family, teaching me about 
                     Sepedi culture and the mining community around Burgersfort.
                   </p>
                   <p className="text-gray-700 leading-relaxed mb-4">
-                    This photo captures the essence of rural South African life—where modern infrastructure meets traditional 
+                    This photo captures the essence of rural South African life: where modern infrastructure meets traditional 
                     community living. The goats casually using our newly constructed road shows how engineering projects 
                     become part of the fabric of daily life.
                   </p>
                   <blockquote className="text-green-800 italic font-medium border-l-4 border-green-500 pl-4">
-                    "Mashaba Street doesn't actually exist—it's just what we called this area near The Mashabas! 
+                    "Mashaba Street doesn't actually exist; it's just what we called this area near The Mashabas! 
                     But the friendships and memories we made there are very real. Wish y'all could ride that road 
                     with the same pride we built it with."
                   </blockquote>
@@ -1512,13 +1618,13 @@ export default function Page() {
                 <div className="bg-gradient-to-r from-purple-50 to-violet-50 p-8 rounded-2xl border border-purple-200">
                   <h3 className="text-2xl font-bold text-[#8B4513] mb-4">Returning to My Roots: Teaching at Mmankala</h3>
                   <p className="text-gray-700 leading-relaxed mb-4">
-                    One of my most fulfilling experiences was returning to Mmankala Technical and Commercial High School—
-                    the same institution that nurtured my engineering dreams—to teach Euclidean geometry. Standing in 
+                    One of my most fulfilling experiences was returning to Mmankala Technical and Commercial High School:
+                    the same institution that nurtured my engineering dreams: to teach Euclidean geometry. Standing in 
                     front of that blackboard, I represented something powerful: the 
                     possibility of dreams realized.
                   </p>
                   <p className="text-gray-700 leading-relaxed mb-4">
-                    Teaching those geometric principles wasn't just about mathematics—it was about showing students 
+                    Teaching those geometric principles wasn't just about mathematics; it was about showing students 
                     that someone from their community, someone who faced challenges and setbacks, could still achieve 
                     their goals and return to uplift others.
                   </p>
@@ -1570,17 +1676,17 @@ export default function Page() {
                   <p className="text-gray-700 leading-relaxed mb-4">
                     Some of my most productive study sessions happened at the John Moffat venue in the School of 
                     Construction, rather than our traditional Civil and Environmental Engineering building in The Hillman Building. This 
-                    space became our sanctuary—a place where complex engineering concepts became clearer through 
+                    space became our sanctuary: a place where complex engineering concepts became clearer through 
                     collaborative discussion and shared struggle.
                   </p>
                   <p className="text-gray-700 leading-relaxed mb-4">
                     These study sessions taught me that learning is not a solitary journey. The friends who sat 
                     with me during those long nights, who explained concepts when I was confused, who celebrated 
-                    small victories and supported me through setbacks—they were integral to my success.
+                    small victories and supported me through setbacks; they were integral to my success.
                   </p>
                   <p className="text-gray-700 leading-relaxed font-semibold">
                     "In that quiet study space, surrounded by laptops and engineering textbooks, we weren't just 
-                    learning formulas—we were building the foundation for lifelong friendships and professional networks."
+                    learning formulas; we were building the foundation for lifelong friendships and professional networks."
                   </p>
                 </div>
               </div>
@@ -1595,18 +1701,18 @@ export default function Page() {
                   <h3 className="text-2xl font-bold text-[#8B4513] mb-4">Building My Creative Brand</h3>
                   <p className="text-gray-700 leading-relaxed mb-4">
                     Even during my academic struggles, I never stopped creating. My artist merchandise and music 
-                    production weren't just hobbies—they were expressions of my identity and early attempts at 
+                    production weren't just hobbies: they were expressions of my identity and early attempts at 
                     building a personal brand. These photoshoots with friends represented hope and ambition during 
                     uncertain times.
                   </p>
                   <p className="text-gray-700 leading-relaxed mb-4">
                     Promoting my music online while studying engineering taught me valuable lessons about marketing, 
-                    audience engagement, and content creation—skills that would later become central to my success 
+                    audience engagement, and content creation: skills that would later become central to my success 
                     as an educational content creator.
                   </p>
                   <p className="text-gray-700 leading-relaxed font-semibold">
                     "Every creative project, every photoshoot, every beat I produced was practice for the content 
-                    creator I would eventually become. Art and engineering aren't opposites—they're complementary 
+                    creator I would eventually become. Art and engineering aren't opposites: they're complementary 
                     expressions of human creativity and problem-solving."
                   </p>
                 </div>
@@ -1622,7 +1728,7 @@ export default function Page() {
                   <h5 className="font-bold text-[#8B4513] mb-2">Creative Brand Photoshoot</h5>
                   <p className="text-sm text-gray-700">
                     Promoting artist merchandise with friends, building a creative brand while pursuing engineering 
-                    studies—balancing multiple passions and future possibilities.
+                    studies; balancing multiple passions and future possibilities.
                   </p>
                 </div>
               </div>
@@ -1709,7 +1815,7 @@ export default function Page() {
               <h4 className="text-xl font-bold text-[#8B4513] mb-4">Lessons from the Rock</h4>
               <p className="text-gray-700 leading-relaxed mb-4">
                 This journey taught me responsibility, perseverance, and presence. It reminded me that engineering is not just 
-                about plans and progress logs—it's about impact. It's about building something that lasts, and doing so with integrity.
+                about plans and progress logs: it's about impact. It's about building something that lasts, and doing so with integrity.
               </p>
               <p className="text-gray-700 leading-relaxed mb-4">
                 Working in Burgersfort was not just about infrastructure; it was about service. Seeing how our work touched lives, 
@@ -1722,9 +1828,9 @@ export default function Page() {
                 our engineering capabilities and problem-solving skills.
               </p>
               <blockquote className="text-amber-800 italic font-medium border-l-4 border-amber-500 pl-4 text-lg">
-                "I never wished for an easy project or path because I know what hardships do to people—they turn you into a genius, 
+                "I never wished for an easy project or path because I know what hardships do to people; they turn you into a genius, 
                 a persistent and persevering legend in all facets of life. Don't wish it was easier; wish you were better." 
-                — Jim Rohn
+                (Jim Rohn)
               </blockquote>
             </div>
           </div>
@@ -1743,7 +1849,7 @@ export default function Page() {
                 <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl p-4">
                   <h5 className="font-bold text-[#8B4513] mb-2">Family Victory at Wits University</h5>
                   <p className="text-sm text-gray-700">
-                    Graduation day with my mother and brother—the two people who believed in me when I couldn't believe in myself.
+                    Graduation day with my mother and brother: the two people who believed in me when I couldn't believe in myself.
                   </p>
                 </div>
               </div>
@@ -1753,18 +1859,18 @@ export default function Page() {
                   <h3 className="text-2xl font-bold text-[#8B4513] mb-4">For My Mother and Brother: The Ultimate Motivation</h3>
                   <p className="text-gray-700 leading-relaxed mb-4">
                     Through every setback, every exclusion, every moment of doubt, there were two constant sources of motivation: 
-                    my mother and my brother. That honours degree I received wasn't just mine—it belonged to all of us. Every 
+                    my mother and my brother. That honours degree I received wasn't just mine; it belonged to all of us. Every 
                     sacrifice they made, every word of encouragement during my darkest moments, every prayer whispered for my success.
                   </p>
                   <p className="text-gray-700 leading-relaxed mb-4">
                     Special recognition goes to my brother, who had to crawl so I could walk. He didn't finish high school, but 
                     he taught me more about life, resilience, and character than any textbook ever could. This Honours degree is 
-                    for him too—proof that his sacrifices and wisdom weren't in vain.
+                    for him too; proof that his sacrifices and wisdom weren't in vain.
                   </p>
                   <p className="text-gray-700 leading-relaxed mb-4">
-                    Being the first generation in our family to attend and graduate from the top university in Africa—Wits University, 
+                    Being the first generation in our family to attend and graduate from the top university in Africa: Wits University, 
                     ranked 2nd in Africa and 2nd in South Africa according to US News Best Global Universities Rankings 2024-2025 
-                    (Global score 61.9, #264 globally)—carried the weight of family dreams and community expectations.
+                    (Global score 61.9, #264 globally), carried the weight of family dreams and community expectations.
                   </p>
                   <blockquote className="text-yellow-800 italic font-medium border-l-4 border-yellow-500 pl-4 text-lg">
                     "Mama, this degree is yours as much as it is mine. Brother, your wisdom and sacrifice paved this path. 
@@ -1781,20 +1887,19 @@ export default function Page() {
             <h3 className="text-2xl font-bold mb-6">From Engineer to Digital Transformer</h3>
             <p className="text-lg mb-6 max-w-4xl mx-auto">
               Today, I am a full-time content creator, educational entrepreneur, and digital transformer. I've evolved 
-              from someone who educational entrepreneur, and digital transformer. I've evolved
               from someone who needed support to someone who provides it. My multi-channel empire reaches thousands
               of students across YouTube, TikTok, Instagram, and other platforms, turning my hard-earned engineering
               knowledge into accessible, life-changing educational content.
             </p>
             <p className="text-lg mb-6 max-w-4xl mx-auto">
               I am a creative, always have been, and always will be. Whether it's civil engineering, mathematics,
-              music production, tech, AI, HTML, CSS, Next.js, LLM development, or any other field I explore—creativity
+              music production, tech, AI, HTML, CSS, Next.js, LLM development, or any other field I explore: creativity
               and persistence remain my driving forces.
             </p>
             <p className="text-yellow-100 max-w-4xl mx-auto text-xl font-semibold">
               "The circle is complete: from receiving mentorship to providing it, from being supported by community
               to building communities, from struggling student to successful educator. This is what transformation
-              looks like—not just personal success, but the multiplication of opportunity for others."
+              looks like: not just personal success, but the multiplication of opportunity for others."
             </p>
           </div>
         </div>
@@ -1812,7 +1917,7 @@ export default function Page() {
               From Exclusion to <span className="bg-gradient-to-r from-[#FFD700] to-[#FF8C00] bg-clip-text text-transparent">Distinction</span>
             </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
-              Three strategic tiers designed for technical students, engineers, and builders who refuse to accept mediocrity. 
+              Three strategic paths designed for technical students, engineers, and builders who refuse to accept mediocrity. 
               Choose your transformation level based on your ambition.
             </p>
           </div>
@@ -1832,8 +1937,8 @@ export default function Page() {
                 <CardTitle className="text-2xl font-bold text-gray-900 mb-2">The Vault</CardTitle>
                 <p className="text-sm text-gray-600 font-medium mb-4">Library of essentials</p>
                 <div className="space-y-1 mb-4">
-                  <div className="text-4xl font-bold text-green-600">R129</div>
-                  <p className="text-sm text-gray-600">/month or R1,290/year (save 17%)</p>
+                  <div className="text-4xl font-bold text-green-600">R129/month</div>
+                  <p className="text-sm text-gray-600">or R1,290/year (save 17%)</p>
                 </div>
               </CardHeader>
 
@@ -1843,23 +1948,23 @@ export default function Page() {
                   <ul className="space-y-2">
                     <li className="flex items-start space-x-3">
                       <span className="text-green-500 font-bold mt-0.5">→</span>
-                      <span className="text-gray-700">Lifetime library access to all Maths & Physics resources</span>
+                      <span className="text-gray-700">Lifetime library access to all Grade 1-12+ Classwork Books in Civil Tech, Engineering Graphics and Design, Maths & Physics resources</span>
                     </li>
                     <li className="flex items-start space-x-3">
                       <span className="text-green-500 font-bold mt-0.5">→</span>
-                      <span className="text-gray-700">Monthly "New Drop" Actionable PDFs</span>
+                      <span className="text-gray-700">Daily PDFs with Actionable Steps to a GRIT Engineer</span>
                     </li>
                     <li className="flex items-start space-x-3">
                       <span className="text-green-500 font-bold mt-0.5">→</span>
-                      <span className="text-gray-700">Access to WhatsApp community groups</span>
+                      <span className="text-gray-700">Access to Free Facebook & Instagram Group</span>
                     </li>
                     <li className="flex items-start space-x-3">
                       <span className="text-green-500 font-bold mt-0.5">→</span>
-                      <span className="text-gray-700">Calculator hacks & memory tools</span>
+                      <span className="text-gray-700">Calculus & Euclidean Geometry Videos</span>
                     </li>
                     <li className="flex items-start space-x-3">
                       <span className="text-green-500 font-bold mt-0.5">→</span>
-                      <span className="text-gray-700">Free access to monthly study sessions</span>
+                      <span className="text-gray-700">Free Daily Youtube Technical Maths and Science shorts</span>
                     </li>
                   </ul>
                 </div>
@@ -1891,12 +1996,12 @@ export default function Page() {
                   <span className="text-3xl">🎯</span>
                 </div>
                 <CardTitle className="text-3xl font-bold text-gray-900 mb-2">The Mastery Cohort</CardTitle>
-                <p className="text-sm text-gray-700 font-bold mb-4">Structured transformation for engineers</p>
+                <p className="text-sm text-gray-700 font-bold mb-4">I guide you through the fire to secure your professional future</p>
                 <div className="space-y-1 mb-4">
                   <div className="space-y-1">
                     <div className="text-xs text-gray-600 line-through">R499/month</div>
-                    <div className="text-4xl font-bold text-amber-600">R374</div>
-                    <p className="text-sm text-gray-600">/month (seasonal offer - limited time)</p>
+                    <div className="text-4xl font-bold text-amber-600">R374/month</div>
+                    <p className="text-sm text-gray-600"> (Back 2 School Special offer - limited time)</p>
                   </div>
                 </div>
               </CardHeader>
@@ -1947,20 +2052,23 @@ export default function Page() {
             </Card>
 
             {/* TIER 3: The Distinction Bootcamp (Transformation) */}
-            <Card className="relative overflow-hidden border-2 border-purple-500 hover:shadow-2xl transition-all duration-300 hover:scale-105">
+            <Card className="relative overflow-hidden border-2 border-purple-500 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 bg-slate-50">
+              <div className="absolute top-0 right-0 bg-purple-600 text-white px-8 py-1 rotate-45 translate-x-8 translate-y-2 text-[10px] font-bold uppercase tracking-widest shadow-sm">
+                Exclusive
+              </div>
               <div className="absolute top-4 left-4">
-                <Badge className="bg-purple-600 text-white px-3 py-1 text-xs font-bold">PREMIUM</Badge>
+                <Badge className="bg-purple-600 text-white px-3 py-1 text-xs font-bold uppercase tracking-widest">Elite Transformation</Badge>
               </div>
 
               <CardHeader className="text-center pb-6">
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-violet-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">🏆</span>
+                  <span className="text-3xl">🤝</span>
                 </div>
-                <CardTitle className="text-2xl font-bold text-gray-900 mb-2">The Distinction Bootcamp</CardTitle>
-                <p className="text-sm text-gray-600 font-medium mb-4">12-week intensive transformation</p>
+                <CardTitle className="text-2xl font-bold text-gray-900 mb-2">The Transformation Partner</CardTitle>
+                <p className="text-sm text-gray-600 font-medium mb-4">I'm your consultant, big brother, and technical guide. We unlock your hidden potential together.</p>
                 <div className="space-y-1 mb-4">
-                  <div className="text-4xl font-bold text-purple-600">R4,999</div>
-                  <p className="text-sm text-gray-600">one-time / 12-week intensive</p>
+                  <div className="text-4xl font-bold text-purple-600 uppercase tracking-tight">Direct Mentorship</div>
+                  <p className="text-xs text-gray-500 font-semibold tracking-wide">Investment: R4,999 (Limited to 5 candidates per quarter)</p>
                 </div>
               </CardHeader>
 
@@ -1990,13 +2098,17 @@ export default function Page() {
                     </li>
                     <li className="flex items-start space-x-3">
                       <span className="text-purple-600 font-bold mt-0.5">→</span>
+                      <span className="text-gray-700"><span className="font-bold">Elite Review Trip:</span> Exclusive invitation to our annual 12-week wrap-up workshop & adventure trip (Sun City or similar South African landmarks)</span>
+                    </li>
+                    <li className="flex items-start space-x-3">
+                      <span className="text-purple-600 font-bold mt-0.5">→</span>
                       <span className="text-gray-700"><span className="font-bold">VIP Network Pass:</span> Direct access to engineering firms, contractors, and employers</span>
                     </li>
                   </ul>
                 </div>
 
                 <div className="bg-gradient-to-r from-purple-50 to-violet-50 p-4 rounded-lg border border-purple-200">
-                  <p className="text-sm text-gray-700"><span className="font-bold">Best for:</span> Career changers, professionals seeking rapid advancement, those ready for intensive 1-on-1 transformation</p>
+                  <p className="text-sm text-gray-700"><span className="font-bold">Best for:</span> Career changers, civil engineers struggling to find consulting jobs, and professionals seeking rapid advancement through content creation and personal branding.</p>
                 </div>
 
                 <Button
@@ -2020,7 +2132,7 @@ export default function Page() {
         Why the Chrizeecry Method Works
       </h3>
       <p className="text-slate-400 max-w-2xl mx-auto">
-        Combining high-tier academic theory from Wits University with the grit of real-world site engineering.
+        Combining expert academic theory from Wits University with the grit of real-world site engineering.
       </p>
     </div>
 
@@ -2107,7 +2219,7 @@ export default function Page() {
           <div className="text-center space-y-6">
             <h3 className="text-3xl font-bold text-gray-900">Ready to Transform?</h3>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-              No matter where you're starting, there's a tier designed for your journey. Join 1000+ technical students 
+              No matter where you're starting, there's a path designed for your journey. Join 1000+ technical students 
               who refused to accept exclusion and chose distinction instead.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
@@ -2140,11 +2252,11 @@ export default function Page() {
             <Badge className="bg-[#8B4513] text-white px-4 py-2 text-sm font-semibold">📖 The Real Story</Badge>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900">From Exclusion to Engineer</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              "They told me I wouldn't make it. But eight years later, I walked out with an engineering degree from Wits
-              — not just with a certificate, but with a spine forged through fire."
+              "They told me I wouldn't make it. But eight years later, I walked out with an engineering degree from Wits:
+              not just with a certificate, but with a spine forged through fire."
             </p>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              What most don't know is how brutal the journey was — not just academically, but emotionally, financially,
+              What most don't know is how brutal the journey was: not just academically, but emotionally, financially,
               and spiritually. My path wasn't straight. It was filled with academic exclusions, financial struggles, and
               moments of deep doubt. But each setback became a building block for resilience.
             </p>
@@ -2155,17 +2267,17 @@ export default function Page() {
               <div className="bg-gradient-to-r from-amber-50 to-yellow-50 p-8 rounded-2xl border border-amber-200 hover:shadow-xl transition-all duration-300">
                 <h3 className="text-2xl font-bold text-[#8B4513] mb-4">"I wasn't supposed to make it."</h3>
                 <p className="text-gray-700 mb-4 leading-relaxed">
-                  My academic record at Wits University tells a story most people wouldn't be proud of. But I am — not
+                  My academic record at Wits University tells a story most people wouldn't be proud of. But I am: not
                   because I struggled, but because I overcame. I started my BSc in Civil Engineering in 2014. Year after
-                  year, I faced delays, exclusions, and setbacks — both academic and financial.
+                  year, I faced delays, exclusions, and setbacks: both academic and financial.
                 </p>
                 <p className="text-gray-700 mb-4 leading-relaxed">
                   I was excluded more than once. Had to apply for readmission. Permitted to proceed on special
                   curriculum. Told to repeat years. It wasn't linear. It wasn't smooth. But it was mine.
                 </p>
                 <p className="text-gray-700 font-semibold text-lg">
-                  Every challenge shaped me. In 2021, I completed all requirements and qualified. Not just with a degree
-                  — but with a mindset built on grit and endurance.
+                  Every challenge shaped me. In 2021, I completed all requirements and qualified. Not just with a degree,
+                  but with a mindset built on grit and endurance.
                 </p>
               </div>
 
@@ -2337,9 +2449,9 @@ export default function Page() {
                 <p className="text-lg leading-relaxed">I wasn't supposed to make it.</p>
 
                 <p className="text-lg leading-relaxed">
-                  My academic record at Wits University tells a story most people wouldn't be proud of. But I am — not
+                  My academic record at Wits University tells a story most people wouldn't be proud of. But I am: not
                   because I struggled, but because I overcame. I started my BSc in Civil Engineering in 2014. Year after
-                  year, I faced delays, exclusions, and setbacks — both academic and financial. I was excluded more than
+                  year, I faced delays, exclusions, and setbacks: both academic and financial. I was excluded more than
                   once. Had to apply for readmission. Permitted to proceed on special curriculum. Told to repeat years.
                   It wasn't linear. It wasn't smooth. But it was mine.
                 </p>
@@ -2347,21 +2459,21 @@ export default function Page() {
                 <p className="text-lg leading-relaxed font-semibold text-yellow-100">Every challenge shaped me.</p>
 
                 <p className="text-lg leading-relaxed">
-                  In 2021, I completed all requirements and qualified. Not just with a degree — but with a mindset built
+                  In 2021, I completed all requirements and qualified. Not just with a degree, but with a mindset built
                   on grit and endurance.
                 </p>
 
                 <p className="text-lg leading-relaxed">
                   And this pattern didn't just show up in school. When I was part of the road construction project in
                   Burgersfort, we hit delays, unexpected issues, and major pressure. But just like my student journey, I
-                  pushed through. I saw it through — from breaking ground to full functional completion.
+                  pushed through. I saw it through: from breaking ground to full functional completion.
                 </p>
 
                 <p className="text-lg leading-relaxed font-semibold text-yellow-100">Because that's who I am.</p>
 
                 <p className="text-xl leading-relaxed font-bold text-center text-yellow-100">
                   I'm that engineer who endures at every level. I thrive under pressure and stand tall like the sun in
-                  the sky — always shining, no matter what.
+                  the sky: always shining, no matter what.
                 </p>
               </div>
             </div>
@@ -2416,7 +2528,7 @@ export default function Page() {
                   </div>
                   <div className="bg-white p-4 rounded-lg shadow-sm">
                     <blockquote className="text-orange-800 italic font-medium">
-                      "This was the year I learned that university wasn't just about being smart—it was about
+                      "This was the year I learned that university wasn't just about being smart: it was about
                       resilience, time management, and developing effective study methods. I had to completely rethink
                       my approach to learning."
                     </blockquote>
@@ -2536,7 +2648,7 @@ export default function Page() {
                   <div className="bg-white p-4 rounded-lg shadow-sm">
                     <blockquote className="text-purple-800 italic font-medium">
                       "As a Lead Mentor, I achieved an 80% success rate in helping mentees continue to the next academic
-                      year. The irony wasn't lost on me—I was helping others succeed while still fighting for my own
+                      year. The irony wasn't lost on me; I was helping others succeed while still fighting for my own
                       academic survival."
                     </blockquote>
                   </div>
@@ -2573,7 +2685,7 @@ export default function Page() {
                   <blockquote className="text-blue-800 italic font-medium">
                     "Even after completing all academic requirements, I still had to overcome financial hurdles. Working
                     with the community garden project reminded me that engineering isn't just about technical
-                    skills—it's about building and nurturing growth in all its forms."
+                    skills; it's about building and nurturing growth in all its forms."
                   </blockquote>
                 </div>
               </div>
@@ -2591,7 +2703,7 @@ export default function Page() {
                   <blockquote className="text-yellow-100 italic font-medium">
                     "Every day on site, I draw on the resilience I developed at Wits. When we face construction
                     challenges, I remember the academic obstacles I overcame. The road we're building is straight and
-                    well-designed—unlike my path to becoming an engineer—but both lead to valuable destinations."
+                    well-designed, unlike my path to becoming an engineer, but both lead to valuable destinations."
                   </blockquote>
                 </div>
               </div>
@@ -2725,7 +2837,7 @@ export default function Page() {
                 that with proper design, materials, and maintenance, structures can withstand forces far beyond what
                 seems possible. The same is true for people."
               </blockquote>
-              <p className="text-xl font-semibold text-yellow-100">— Samson Senyatsi</p>
+              <p className="text-xl font-semibold text-yellow-100">(Samson Senyatsi)</p>
             </div>
           </div>
 
@@ -2734,13 +2846,81 @@ export default function Page() {
             <h3 className="text-2xl font-bold mb-6">The Transformation</h3>
             <p className="text-lg mb-6 max-w-4xl mx-auto">
               What started as academic struggle became my greatest strength. I learned to endure, adapt, and persist
-              when everything seemed impossible. I discovered that resilience isn't about never falling — it's about
+              when everything seemed impossible. I discovered that resilience isn't about never falling; it's about
               getting up every time you do.
             </p>
             <p className="text-yellow-100 max-w-4xl mx-auto">
               Today, I use these hard-earned lessons to help others navigate their own challenges. My methods aren't
-              theoretical — they're battle-tested through years of real struggle and eventual triumph.
+              theoretical: they're battle-tested through years of real struggle and eventual triumph.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Educational Value Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-amber-50/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <Badge className="bg-amber-100 text-[#8B4513] border-amber-200">💎 THE KNOWLEDGE VAULT</Badge>
+                <h2 className="text-4xl font-extrabold text-gray-900 leading-tight">
+                  Master the Fundamentals of <br />
+                  <span className="text-amber-600 italic underline decoration-amber-300 underline-offset-8">Resilient Engineering</span>
+                </h2>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  Success in South African schools and industry isn't just about formulas: it's about the <span className="font-bold underline">Euclidean logic</span> of problem-solving. Whether you're a parent supporting a student or a Civil Engineer building your personal brand, we bridge the gap between theory and legacy.
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-6">
+                <Card className="p-6 border-none shadow-md bg-white hover:shadow-xl transition-all border-t-4 border-t-amber-500">
+                  <Calculator className="w-10 h-10 text-amber-600 mb-4" />
+                  <h4 className="font-bold text-lg mb-2">Technical Mastery</h4>
+                  <p className="text-sm text-gray-600">Deep dives into Calculus & Euclidean Geometry for Grade 10-12 and beyond.</p>
+                </Card>
+                <Card className="p-6 border-none shadow-md bg-white hover:shadow-xl transition-all border-t-4 border-t-blue-500">
+                  <Star className="w-10 h-10 text-blue-600 mb-4" />
+                  <h4 className="font-bold text-lg mb-2">Personal Branding</h4>
+                  <p className="text-sm text-gray-600">Learn content creation skills to stand out in the consulting engineering market.</p>
+                </Card>
+              </div>
+
+              <Button 
+                onClick={() => scrollToSection("community")}
+                className="group bg-slate-900 text-white hover:bg-black px-8 py-6 rounded-2xl font-bold text-lg"
+              >
+                Start Your Transformation
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-tr from-amber-500/20 to-orange-500/20 blur-3xl rounded-full" />
+              <div className="relative bg-white p-8 rounded-3xl shadow-2xl border border-amber-100">
+                <h3 className="text-xl font-bold mb-6 flex items-center">
+                  <span className="mr-2">📝</span> Featured Study Resources
+                </h3>
+                <div className="space-y-4">
+                  {[
+                    "Handwritten Wits Civil Engineering Notes",
+                    "Euclidean Geometry: The Visual Logic Guide",
+                    "Calculus for Technical Excellence",
+                    "Consulting Career Breakthrough Roadmap"
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center p-3 rounded-xl bg-amber-50/50 border border-amber-100 hover:bg-amber-50 transition-colors">
+                      <div className="w-8 h-8 rounded-lg bg-white shadow-sm flex items-center justify-center text-amber-600 font-bold mr-4">
+                        {i + 1}
+                      </div>
+                      <span className="font-medium text-gray-800">{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-8 p-4 bg-slate-50 rounded-2xl border border-slate-100 text-center">
+                  <p className="text-xs text-gray-500 font-medium">Join 2,500+ members in the collective</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -2812,12 +2992,12 @@ export default function Page() {
       </div>
     </div>
 
-    {/* Premium Community */}
+    {/* Exclusive Transformation Paths */}
     <div className="space-y-8">
       <div className="text-center">
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">Premium Memberships</h3>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">Elite Transformation Paths</h3>
         <p className="text-gray-600">
-          Unlock exclusive content, AI tools, mentorship, and advanced resources with our premium memberships.
+          I'll be your consultant and "big brother" on these paths. We'll unlock high-income skills and technical mastery together.
         </p>
       </div>
 
@@ -2861,17 +3041,17 @@ export default function Page() {
     <h3 className="text-2xl font-bold mb-8">Social Media Reach</h3>
     <div className="grid md:grid-cols-4 gap-8">
       <div>
-        <div className="text-4xl font-bold mb-2">5,571+</div>
+        <div className="text-4xl font-bold mb-2">6930+</div>
         <div className="text-blue-100">Total Followers</div>
         <div className="text-sm text-blue-200">Across all platforms</div>
       </div>
       <div>
-        <div className="text-4xl font-bold mb-2">113K+</div>
+        <div className="text-4xl font-bold mb-2">178K+</div>
         <div className="text-blue-100">Video Views</div>
         <div className="text-sm text-blue-200">Educational content</div>
       </div>
       <div>
-        <div className="text-4xl font-bold mb-2">350+</div>
+        <div className="text-4xl font-bold mb-2">486+</div>
         <div className="text-blue-100">Videos Created</div>
         <div className="text-sm text-blue-200">Educational & creative</div>
       </div>
@@ -2885,7 +3065,356 @@ export default function Page() {
 </div>
 </section>
 
+{/* Knowledge Vault & Technical Mastery Section */}
+<section className="py-24 bg-[#0a0a0a] text-white overflow-hidden relative">
+  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
+  <div className="container mx-auto px-4 relative z-10">
+    <div className="max-w-4xl mx-auto text-center mb-16 space-y-4">
+      <Badge className="bg-amber-500 text-black font-black uppercase tracking-widest px-4 py-2">The STEM Blueprint</Badge>
+      <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter">
+        Master the Big 4: <br/>
+        <span className="text-amber-500 italic">EGD, Civil Tech, Maths & Science</span>
+      </h2>
+      <p className="text-xl text-gray-400 font-medium leading-relaxed">
+        Designed by a Wits Civil Engineer who survived two academic exclusions so you don't have to. 
+        We don't just teach subjects; we build non-linear futures.
+      </p>
+    </div>
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[
+        { title: "Technical Maths", desc: "Calculus, Euclidean Geometry, and Exam Hacks.", icon: <Calculator className="w-8 h-8"/> },
+        { title: "EGD & Civil Tech", desc: "Stop guessing Isometric and Sectional views.", icon: <ArrowRight className="w-8 h-8"/> },
+        { title: "Study Beats", desc: "Technical beats (AfroSoul/Amapiano) for deep focus.", icon: <Music className="w-8 h-8"/> },
+        { title: "AI Tutors", icon: <Star className="w-8 h-8"/>, desc: "Prompt engineering for 24/7 tutor access." }
+      ].map((item, i) => (
+        <Card key={i} className="bg-white/5 border-white/10 backdrop-blur-sm hover:border-amber-500/50 transition-all group">
+          <CardContent className="p-8 space-y-4">
+            <div className="text-amber-500 group-hover:scale-110 transition-transform">{item.icon}</div>
+            <h3 className="text-xl font-black uppercase">{item.title}</h3>
+            <p className="text-sm text-gray-400 font-medium leading-relaxed">{item.desc}</p>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
+
+{/* Book Waitlist Section */}
+<section className="py-20 bg-amber-500 text-black overflow-hidden relative">
+  <div className="container mx-auto px-4">
+    <div className="flex flex-col md:flex-row items-center gap-12">
+      <div className="md:w-1/2 space-y-8">
+        <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-none">
+          "Exclusion <br className="hidden md:block"/> To Engineer" <br/>
+          <span className="text-white">The Book</span>
+        </h2>
+        <p className="text-xl font-bold italic leading-relaxed">
+          My life has always been non-linear. This is the raw, unfiltered story of how I turned 2x Wits exclusions into a BSc (Hons) Civil Engineering degree. 
+          Learn the "Grit Systems" they don't teach in lecture halls.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <input 
+            type="email" 
+            readOnly
+            value="WhatsApp your email to: +27 73 604 3894"
+            className="flex-grow px-6 py-4 rounded-xl bg-black text-amber-500 font-bold border-2 border-amber-500/50"
+          />
+          <Button 
+            className="bg-white text-black font-black uppercase px-8 py-6 rounded-xl hover:bg-black hover:text-white transition-all shadow-xl"
+            onClick={() => window.open("https://wa.me/27736043894?text=Hi%20Chris,%20I'd%20like%20to%20join%20the%20Waitlist%20for%20your%20book%20Exclusion%20To%20Engineer.", "_blank")}
+          >
+            Join Waitlist
+          </Button>
+        </div>
+      </div>
+      <div className="md:w-1/2 relative group">
+         <div className="aspect-[3/4] bg-black rounded-2xl shadow-2xl flex items-center justify-center p-12 relative overflow-hidden transform hover:rotate-2 transition-transform duration-500">
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-600 to-transparent opacity-50"></div>
+            <div className="relative z-10 text-center space-y-6">
+              <h3 className="text-5xl font-black text-white uppercase italic tracking-tighter leading-none">Exclusion <br/> To <br/> Engineer</h3>
+              <p className="text-amber-400 font-black uppercase tracking-widest text-sm">By Samson Chris Senyatsi</p>
+              <div className="pt-8">
+                 <Badge className="bg-white text-black font-black text-lg px-6 py-2">COMING 2026</Badge>
+              </div>
+            </div>
+         </div>
+         <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-2xl transform -rotate-12 border-4 border-black z-20">
+            <span className="text-4xl font-black italic">GRIT</span>
+         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* Contact & Inquiry Section */}
+<section id="contact" className="py-24 bg-white relative">
+  <div className="container mx-auto px-4">
+    <div className="max-w-6xl mx-auto">
+      <div className="grid lg:grid-cols-2 gap-20">
+        <div className="space-y-12">
+          <div className="space-y-6">
+            <h2 className="text-5xl font-black uppercase italic tracking-tighter">Let's Build</h2>
+            <p className="text-xl text-gray-600 font-medium leading-relaxed">
+              Whether you're a parent seeking a mentor for your child, a teacher looking for resources, 
+              or a business wanting to sponsor the bright minds of Lefatlheng: I'm ready to talk.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-8">
+            <div className="space-y-4 p-6 bg-amber-50 rounded-2xl border border-amber-100">
+              <div className="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center text-white">
+                <MessageCircle className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-black uppercase text-xs text-amber-600 tracking-widest mb-1">Company Details</h4>
+                <p className="font-black text-gray-900 leading-tight">Chrizeecry Collective (Pty) Ltd</p>
+                <p className="text-xs text-gray-500 mt-1">Reg No: 2025 / 308227 / 07</p>
+              </div>
+            </div>
+
+            <div className="space-y-4 p-6 bg-amber-50 rounded-2xl border border-amber-100">
+              <div className="w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center text-white">
+                <Star className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-black uppercase text-xs text-amber-600 tracking-widest mb-1">Direct Line</h4>
+                <p className="font-black text-gray-900">+27 73 604 3894</p>
+                <p className="text-xs text-gray-500 mt-1">chrizeecry@gmail.com</p>
+              </div>
+            </div>
+          </div>
+
+          <Card className="bg-gray-950 text-white border-none shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+            <CardContent className="p-8 relative z-10">
+              <h4 className="font-black uppercase mb-4 text-amber-400 tracking-widest italic">Sponsorship & Vision</h4>
+              <p className="text-lg text-gray-300 font-medium leading-relaxed italic">
+                "As a solopreneur focusing on the 'Big 4', I need partners to sponsor drawing tools, 
+                WiFi for kids in Lefatlheng, and books. Let's empower those bright minds."
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card className="shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] border-none rounded-3xl overflow-hidden">
+          <div className="h-4 bg-gradient-to-r from-amber-400 to-orange-500"></div>
+          <CardContent className="p-10 md:p-12 space-y-8">
+            <h3 className="text-3xl font-black uppercase italic tracking-tighter">Direct Connection</h3>
+            <div className="space-y-6">
+              <p className="text-gray-600 font-medium italic">
+                "No complicated forms here. I'm a real person, and I want to help you or your child succeed. Choose how you'd like to connect below:"
+              </p>
+              
+              <div className="grid gap-4">
+                <Button 
+                  className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-black uppercase py-8 rounded-2xl transition-all shadow-xl text-lg tracking-widest flex items-center justify-center space-x-3"
+                  onClick={() => window.open("https://wa.me/27736043894?text=Hi%20Chris,%20I'm%20inquiring%20about...", "_blank")}
+                >
+                  <MessageCircle className="w-6 h-6" />
+                  <span>WhatsApp Me Directly</span>
+                </Button>
+
+                <Button 
+                  className="w-full bg-black text-white font-black uppercase py-8 rounded-2xl hover:bg-amber-500 hover:text-black transition-all shadow-xl text-lg tracking-widest flex items-center justify-center space-x-3"
+                  onClick={() => window.open("https://forms.gle/your-google-form-link", "_blank")}
+                >
+                  <FileText className="w-6 h-6" />
+                  <span>Fill Inquiry Form</span>
+                </Button>
+
+                <div className="text-center pt-4">
+                  <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Or Email</p>
+                  <a href="mailto:chrizeecry@gmail.com" className="text-xl font-black text-gray-900 hover:text-amber-500 transition-colors tracking-tight">chrizeecry@gmail.com</a>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  </div>
+</section>
+
 <Footer />
+
+{showDiscountPopup && (
+  <div className={`fixed bottom-10 right-5 md:right-10 z-[100] transition-all duration-500 ${discountMinimized ? 'w-auto' : 'max-w-sm w-full'}`}>
+    {discountMinimized ? (
+      <button
+        onClick={() => setDiscountMinimized(false)}
+        className="bg-orange-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all flex items-center space-x-2"
+      >
+        <Star className="w-6 h-6 fill-current" />
+        <span className="font-bold pr-2 text-sm">25% OFF</span>
+      </button>
+    ) : (
+      <div className="bg-white shadow-2xl border-2 border-orange-500 p-6 rounded-2xl transform animate-in slide-in-from-bottom-20">
+        <div className="flex justify-end space-x-2 absolute top-2 right-2">
+          <button 
+            onClick={() => setDiscountMinimized(true)} 
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+            title="Minimize"
+          >
+            <Minus className="h-5 w-5" />
+          </button>
+          <button 
+            onClick={() => setShowDiscountPopup(false)} 
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+            <Star className="w-6 h-6 text-orange-600 fill-current" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900">⏰ Limited Offer!</h3>
+        </div>
+        <p className="text-gray-600 mb-4 leading-relaxed">
+          Get <span className="font-bold text-orange-600 text-lg">25% OFF</span> the Mastery Cohort today.
+        </p>
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-center">
+          <span className="text-sm text-amber-800 font-medium">Use code:</span>
+          <div className="text-xl font-mono font-bold text-[#8B4513] tracking-wider mt-1 select-all">
+            CHRIS25
+          </div>
+        </div>
+        <Button 
+          className="w-full bg-black hover:bg-gray-800 text-white py-6 rounded-xl font-bold text-lg shadow-lg transition-transform hover:scale-[1.02]"
+          onClick={() => {
+            window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")
+            setShowDiscountPopup(false)
+          }}
+        >
+          Claim My Discount
+        </Button>
+      </div>
+    )}
+  </div>
+)}
+
+{showCommunityPopup && (
+  <div className={`fixed bottom-10 left-5 md:left-10 z-[100] transition-all duration-500 ${communityMinimized ? 'w-auto' : 'max-w-sm w-full'}`}>
+    {communityMinimized ? (
+      <button
+        onClick={() => setCommunityMinimized(false)}
+        className="bg-[#8B4513] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all flex items-center space-x-2"
+      >
+        <GraduationCap className="w-6 h-6" />
+        <span className="font-bold pr-2 text-sm">Study Vault</span>
+      </button>
+    ) : (
+      <div className="bg-white shadow-2xl border-2 border-amber-400 p-6 rounded-2xl transform animate-in slide-in-from-bottom-20">
+        <div className="flex justify-end space-x-2 absolute top-2 right-2">
+          <button 
+            onClick={() => setCommunityMinimized(true)} 
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+            title="Minimize"
+          >
+            <Minus className="h-5 w-5" />
+          </button>
+          <button 
+            onClick={() => setShowCommunityPopup(false)} 
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+            <GraduationCap className="w-6 h-6 text-amber-600" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900">🎁 Free Study Vault</h3>
+        </div>
+        <p className="text-gray-600 mb-4 leading-relaxed text-sm">
+          Download <span className="font-bold text-amber-700">Wits Handwritten Notes</span>, Grade 1-12 resources, and get exclusive freebies. 
+          Perfect for students, parents, and junior engineers.
+        </p>
+        <div className="space-y-2 mb-4">
+          <div className="flex items-start text-xs text-gray-500">
+            <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mr-2 mt-1 flex-shrink-0" />
+            <span>Calculus & Euclidean Geometry Guides (Technical Maths & Science)</span>
+          </div>
+          <div className="flex items-start text-xs text-gray-500">
+            <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mr-2 mt-1 flex-shrink-0" />
+            <span>Civil Engineering Consulting & Content Creation Skills</span>
+          </div>
+          <div className="flex items-start text-xs text-gray-500">
+            <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mr-2 mt-1 flex-shrink-0" />
+            <span>Unlock monetary skills even if you are shy or "not cool"</span>
+          </div>
+        </div>
+        <Button 
+          className="w-full bg-[#8B4513] hover:bg-[#6F370F] text-white py-6 rounded-xl font-bold text-lg shadow-lg transition-transform hover:scale-[1.02]"
+          onClick={() => {
+            window.open("https://collective.chrizeecry.com/meet-and-great-the-community", "_blank")
+            setShowCommunityPopup(false)
+          }}
+        >
+          Access Free Vault
+        </Button>
+      </div>
+    )}
+  </div>
+)}
+
+{showScrollTop && (
+  <div className="fixed bottom-10 right-8 z-[90] flex flex-col items-center group">
+    <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity mb-2 animate-bounce">
+      <span className="text-xl">🚀</span>
+      <span className="text-xl">📐</span>
+      <span className="text-xl">🏗️</span>
+    </div>
+    <button
+      onClick={scrollToTop}
+      className="w-14 h-14 bg-[#8B4513] text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 hover:bg-[#6F370F] active:scale-95 border-2 border-amber-200"
+      aria-label="Scroll to top"
+    >
+      <ChevronUp className="w-8 h-8 group-hover:-translate-y-1 transition-transform" />
+    </button>
+  </div>
+)}
+
+{showCookieConsent && (
+  <div className="fixed bottom-0 left-0 right-0 z-[200] p-4 animate-in fade-in slide-in-from-bottom-10 duration-700">
+    <div className="max-w-4xl mx-auto bg-slate-900/95 backdrop-blur-md text-white p-6 rounded-2xl shadow-2xl border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="flex items-center space-x-4">
+        <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+          <span className="text-2xl">🍪</span>
+        </div>
+        <div>
+          <h4 className="font-bold text-lg">Your Privacy & Growth</h4>
+          <p className="text-sm text-slate-400 leading-relaxed">
+            We use cookies to optimize your learning journey and improve our collective experience. 
+            By staying, you agree to our <a href="/policies" className="text-amber-400 hover:underline">Privacy Policy</a>.
+          </p>
+        </div>
+      </div>
+      <div className="flex items-center space-x-3 w-full md:w-auto">
+        <Button 
+          variant="outline" 
+          className="flex-1 md:flex-none border-slate-500 hover:bg-slate-800 hover:border-amber-500 text-white transition-all"
+          onClick={() => {
+            localStorage.setItem("cookie-consent", "declined")
+            setShowCookieConsent(false)
+          }}
+        >
+          Decline
+        </Button>
+        <Button 
+          className="flex-1 md:flex-none bg-gradient-to-r from-amber-500 to-orange-500 hover:from-orange-500 hover:to-amber-500 text-white font-bold px-8"
+          onClick={() => {
+            localStorage.setItem("cookie-consent", "accepted")
+            setShowCookieConsent(false)
+          }}
+        >
+          Accept
+        </Button>
+      </div>
+    </div>
+  </div>
+)}
 </div>
 )
 }

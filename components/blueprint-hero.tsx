@@ -32,7 +32,7 @@ export default function BlueprintHero() {
           </CardHeader>
           <CardContent className="space-y-4 text-gray-800">
             <p>
-              Content is the vehicle — you are the product. Build systems that scale:
+              Content is the vehicle; you are the product. Build systems that scale:
               <span className="font-semibold"> Content → Community → Creation → Capital</span>.
             </p>
           </CardContent>
@@ -66,7 +66,7 @@ export default function BlueprintHero() {
               <CardTitle className="text-xl font-bold text-[#8B4513]">🏅 Real-World Authority</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-gray-800">
-              <p>Resident engineer on a 1.1km road project. 8-year persistence story — practical skills meet teaching.</p>
+              <p>Resident engineer on a 1.1km road project. 8-year persistence story: practical skills meet teaching.</p>
               <p className="text-xs text-gray-600 italic">
                 Note: This program is rigorous. Success requires disciplined effort from mentors, students, parents and
                 community. We teach skills, not guarantees.
@@ -84,18 +84,18 @@ export default function BlueprintHero() {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <div>
-                  <span className="font-semibold">Free Layer</span> — YouTube tutorials & lead magnets
+                  <span className="font-semibold">Free Layer:</span> YouTube tutorials & lead magnets
                 </div>
                 <div>
-                  <span className="font-semibold">Technical Mastery Academy</span> — R349/month community (weekly walkthroughs, beats library, WhatsApp support)
+                  <span className="font-semibold">Technical Mastery Academy:</span> R349/month community (weekly walkthroughs, beats library, WhatsApp support)
                 </div>
               </div>
               <div className="space-y-3">
                 <div>
-                  <span className="font-semibold">Institutional</span> — School programs & teacher training (R10k+)
+                  <span className="font-semibold">Institutional:</span> School programs & teacher training (R10k+)
                 </div>
                 <div>
-                  <span className="font-semibold">IP Licensing</span> — Frameworks & curricula for large-scale impact
+                  <span className="font-semibold">IP Licensing:</span> Frameworks & curricula for large-scale impact
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function BlueprintHero() {
               Check →
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <p className="text-sm text-gray-600">Small interactive tools coming soon — no heavy CPU, just clarity.</p>
+            <p className="text-sm text-gray-600">Small interactive tools coming soon, no heavy CPU, just clarity.</p>
           </div>
         </div>
       </div>

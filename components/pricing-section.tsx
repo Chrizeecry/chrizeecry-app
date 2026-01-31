@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { CheckCircle } from "lucide-react"
+import { CheckCircle, ArrowRight, MessageCircle, Star } from "lucide-react"
 
 interface PricingSectionProps {
   onPlanSelect: (planId: string) => void
@@ -11,115 +11,107 @@ interface PricingSectionProps {
 export function PricingSection({ onPlanSelect }: PricingSectionProps) {
   const plans = [
     {
-      id: "complete",
-      name: "Complete Collective",
-      price: "R397",
-      originalPrice: "R972",
-      savings: "Save R575",
-      description: "Access all four academies, exclusive content, priority support, and monthly 1-on-1 sessions.",
+      id: "free",
+      name: "Free Community",
+      price: "R0",
+      description: "Get started with the basic building blocks and a supportive community of like-minded students.",
       features: [
-        "All 4 Academies",
-        "Priority Support",
-        "Exclusive Content",
-        "Community Access",
-        "Monthly 1-on-1 Sessions",
-        "Lifetime Updates",
-      ],
-      popular: true,
-      badge: "Best Value",
-    },
-    {
-      id: "lifetime",
-      name: "Complete Collective Vault",
-      price: "R999",
-      originalPrice: null,
-      savings: "One-Time Payment",
-      description:
-        "Lifetime access to everything + future drops, including monthly actionable PDFs and quarterly Genius Box.",
-      features: [
-        "Lifetime Access to All Content",
-        "Monthly New Drop PDFs",
-        "Genius Circle Zoom",
-        "All Community Hubs",
-        "Quarterly Genius Box",
-        "Future Content Included",
+        "Public Tips & PDFs",
+        "NSC Maths Essentials",
+        "WhatsApp Channel Access",
+        "Basic Q&A Support",
+        "Study Motivation Beats",
       ],
       popular: false,
-      badge: "Lifetime",
+      badge: "Starter",
+      cta: "Join Free Community",
+      link: "https://whatsapp.com/channel/0029VakuD7fAojZ0hcqnXl22"
+    },
+    {
+      id: "maths-academy",
+      name: "Maths Academy",
+      price: "R129",
+      period: "/month",
+      description: "Master Grade 8-12 NSC Maths with battle-tested strategies from a Wits Civil Engineer.",
+      features: [
+        "Euclidean Geometry Mastery",
+        "Calculus & Technical Maths",
+        "Exam Hack Videos",
+        "Weekly Live Support",
+        "Premium Maths PDF Vault",
+      ],
+      popular: true,
+      badge: "Most Popular",
+      cta: "Join Maths Academy",
+      link: "https://nas.io/chrizeecry-maths-academy-premium"
+    },
+    {
+      id: "civil-structural",
+      name: "Civil N Str",
+      price: "R379",
+      period: "/month",
+      description: "Advanced engineering mindset and technical mastery for those serious about their STEM future.",
+      features: [
+        "12-week Mastery PDF (Maths + Physics)",
+        "Civil/Structural Engineering Tips",
+        "Personalized Progress Roadmaps",
+        "Premium Mentorship Circle",
+        "Monthly Zoom Strategy Sessions",
+        "Exclusion-to-Engineer Framework",
+      ],
+      popular: false,
+      badge: "Professional",
+      cta: "Join Civil N Str",
+      link: "https://nas.io/chrizeecry-civil-structural-premium"
     },
   ]
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12 md:py-20">
-      <div className="text-center space-y-3 mb-12">
-        <h2 className="text-3xl md:text-4xl font-700 tracking-tight text-gray-950">
-          Choose Your Plan
+      <div className="text-center space-y-4 mb-16">
+        <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-950 uppercase">
+          Choose Your Transformation
         </h2>
-        <p className="text-base text-gray-600 max-w-2xl mx-auto">
-          Select the membership that fits your learning journey.
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto font-medium">
+          Whether you're just starting or ready for professional mastery, I'm here to guide you through the fire.
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {plans.map((plan) => (
           <div
             key={plan.id}
-            className={`relative rounded-3xl transition-all duration-300 ${
+            className={`relative rounded-3xl transition-all duration-500 ${
               plan.popular
-                ? "lg:ring-2 lg:ring-gray-900 lg:scale-105"
-                : "ring-1 ring-gray-200"
-            } overflow-hidden group`}
+                ? "lg:ring-4 lg:ring-amber-400 lg:scale-105 shadow-2xl z-10"
+                : "ring-1 ring-amber-100 hover:ring-amber-300 shadow-xl"
+            } overflow-hidden group bg-white flex flex-col`}
           >
-            {/* Glass effect background */}
-            <div
-              className={`absolute inset-0 ${
-                plan.popular
-                  ? "bg-gradient-to-br from-gray-900/5 to-gray-900/10"
-                  : "bg-gray-50/50"
-              }`}
-            />
-
             {plan.popular && (
-              <div className="relative mx-4 mt-4 inline-block">
-                <span className="inline-block bg-gray-900 text-white text-xs font-600 px-3 py-1 rounded-full tracking-wide">
+              <div className="absolute top-0 right-0 mt-4 mr-4 z-20">
+                <span className="bg-amber-400 text-[#8B4513] text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
                   {plan.badge}
                 </span>
               </div>
             )}
 
-            <div className="relative p-8 md:p-10 space-y-8">
+            <div className="relative p-8 md:p-10 space-y-8 flex-grow">
               {/* Price Section */}
               <div className="space-y-4">
-                <h3 className="text-2xl md:text-3xl font-800 tracking-tight text-gray-950">
+                <h3 className="text-2xl font-black text-gray-900 uppercase">
                   {plan.name}
                 </h3>
 
-                <div className="space-y-3">
-                  <div className="flex items-baseline gap-3">
-                    <span className="text-6xl md:text-7xl font-900 tracking-tighter bg-gradient-to-r from-[#FFD700] to-[#FF8C00] bg-clip-text text-transparent">
-                      {plan.price}
-                    </span>
-                    {plan.originalPrice && (
-                      <div className="flex flex-col gap-1">
-                        <span className="text-lg md:text-xl text-gray-400 line-through decoration-2 decoration-red-500 font-600">
-                          {plan.originalPrice}
-                        </span>
-                        <span className="text-xs font-bold text-red-600 uppercase tracking-widest">
-                          Was {plan.originalPrice}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  {plan.savings && (
-                    <div className="inline-block bg-gradient-to-r from-lime-100 to-yellow-100 text-lime-800 px-4 py-2 rounded-full">
-                      <p className="text-sm font-bold">
-                        💚 {plan.savings}
-                      </p>
-                    </div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-5xl md:text-6xl font-black tracking-tighter bg-gradient-to-r from-[#FFD700] to-[#FF8C00] bg-clip-text text-transparent">
+                    {plan.price}
+                  </span>
+                  {plan.period && (
+                    <span className="text-gray-500 font-bold text-lg">{plan.period}</span>
                   )}
                 </div>
 
-                <p className="text-base text-gray-700 leading-relaxed font-medium">
+                <p className="text-sm text-gray-700 leading-relaxed font-bold italic border-l-4 border-amber-400 pl-4">
                   {plan.description}
                 </p>
               </div>
@@ -127,29 +119,33 @@ export function PricingSection({ onPlanSelect }: PricingSectionProps) {
               {/* Features List */}
               <ul className="space-y-4">
                 {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-gray-900 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-gray-700 font-500">{feature}</span>
+                  <li key={index} className="flex items-start gap-3 group/item">
+                    <CheckCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5 group-hover/item:scale-125 transition-transform" />
+                    <span className="text-sm text-gray-800 font-bold">{feature}</span>
                   </li>
                 ))}
               </ul>
+            </div>
 
+            <div className="p-8 mt-auto">
               {/* CTA Button */}
               <Button
-                className={`w-full h-12 rounded-2xl font-600 text-base transition-all duration-300 ${
+                className={`w-full h-14 rounded-2xl font-black text-lg uppercase tracking-wide transition-all duration-300 shadow-lg ${
                   plan.popular
-                    ? "bg-gray-900 hover:bg-gray-800 text-white active:scale-98"
-                    : "bg-gray-100 hover:bg-gray-200 text-gray-900 active:scale-98"
+                    ? "bg-gradient-to-r from-amber-400 to-orange-500 text-white hover:scale-105 active:scale-95 border-b-4 border-orange-700"
+                    : "bg-gray-900 text-white hover:bg-gray-800 hover:scale-105 active:scale-95 border-b-4 border-gray-700"
                 }`}
-                onClick={() => onPlanSelect(plan.id)}
+                onClick={() => window.open(plan.link, "_blank")}
               >
-                {plan.id === "lifetime" ? "Get Lifetime Access" : "Join Now"}
+                {plan.cta}
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
 
               {/* Guarantee */}
-              <div className="text-center pt-4 border-t border-gray-200">
-                <p className="text-xs text-gray-500 font-500 tracking-wide">
-                  30-Day Money-Back Guarantee
+              <div className="text-center mt-6">
+                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">
+                   No Money-Back (Digital Goods) <br/>
+                   <span className="text-amber-600">Extra Month Free Guarantee</span>
                 </p>
               </div>
             </div>
@@ -157,17 +153,48 @@ export function PricingSection({ onPlanSelect }: PricingSectionProps) {
         ))}
       </div>
 
-      {/* Support CTA */}
-      <div className="text-center mt-16">
-        <p className="text-sm text-gray-600 mb-6">
-          Need help choosing the right plan for you?
-        </p>
-        <Button
-          variant="outline"
-          className="rounded-2xl border-gray-300 hover:bg-gray-50 text-gray-900 font-500 h-11"
-        >
-          Schedule a Consultation
-        </Button>
+      {/* Support & Bootcamp CTA */}
+      <div className="mt-20 grid md:grid-cols-2 gap-8">
+        <Card className="bg-gray-950 text-white border-2 border-amber-400 overflow-hidden relative group">
+          <div className="absolute top-0 right-0 p-4">
+             <Star className="w-8 h-8 text-amber-400 fill-amber-400 animate-pulse" />
+          </div>
+          <CardContent className="p-10 space-y-6">
+            <Badge className="bg-amber-400 text-gray-950 font-black">EXECUTIVE / BOOTCAMP</Badge>
+            <h3 className="text-3xl font-black uppercase italic">12-Week Distinction Bootcamp</h3>
+            <p className="text-gray-400 font-medium">
+              A complete identity shift. From academic struggle to absolute technical dominance. 
+              Includes an exclusive education adventure trip (Sun City or similar) for top performers.
+            </p>
+            <div className="flex items-center space-x-2 text-amber-400 font-bold italic">
+               <MessageCircle className="w-5 h-5" />
+               <span>By Application Only: Limited to 10 Seats</span>
+            </div>
+            <Button 
+              className="w-full bg-white text-gray-950 font-black hover:bg-amber-400 transition-colors py-6 text-lg"
+              onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
+            >
+              APPLY FOR THE COHORT
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-white border-2 border-gray-100 shadow-xl flex flex-col justify-center">
+          <CardContent className="p-10 text-center space-y-6">
+            <h3 className="text-2xl font-black text-gray-900 uppercase">Need a specific guide?</h3>
+            <p className="text-gray-600 font-medium italic">
+              "As your mentor and 'older brother' in this game, I want to make sure you have exactly what you need. 
+              Don't get lost in the noise."
+            </p>
+            <Button 
+              variant="outline"
+              className="w-full border-2 border-gray-900 text-gray-900 font-black hover:bg-gray-950 hover:text-white transition-all py-6 rounded-xl"
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              SCHEDULE A CHAT
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
