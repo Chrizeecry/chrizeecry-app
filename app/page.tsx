@@ -709,7 +709,7 @@ export default function Page() {
               />
               <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl p-4 border-l-4 border-blue-500 shadow-lg">
                 <h5 className="font-bold text-[#8B4513] mb-1">Technical Beats Vault</h5>
-                <p className="text-sm text-gray-700">159 subscribers • 23 videos • FL Studio & AI Beats</p>
+                <p className="text-sm text-gray-700">169 subscribers • 23 videos • Chrizeecry Beats & Songs</p>
               </div>
             </div>
           </div>
@@ -3004,9 +3004,9 @@ export default function Page() {
       <div className="space-y-4">
         {[
           { name: "🧠 Maths Academy", price: "R129/month", color: "green" },
-          { name: "🏗️ Civil & Structural", price: "R379/month", color: "amber", badge: "Most Popular" },
-          { name: "🎵 Music & Media", price: "R237/month", color: "purple" },
-          { name: "💎 Complete Collective", price: "R729.99/month", color: "yellow" },
+          { name: "🏗️ Civil & Structural", price: "R374/month", color: "amber", badge: "Most Popular" },
+          { name: "🎵 Music & Media", price: "R374/month", color: "purple" },
+          { name: "💎 Complete Collective", price: "R4999/month", color: "yellow" },
         ].map((membership, index) => (
           <Card
             key={index}
@@ -3215,13 +3215,7 @@ export default function Page() {
                   <span>WhatsApp Me Directly</span>
                 </Button>
 
-                <Button 
-                  className="w-full bg-black text-white font-black uppercase py-8 rounded-2xl hover:bg-amber-500 hover:text-black transition-all shadow-xl text-lg tracking-widest flex items-center justify-center space-x-3"
-                  onClick={() => window.open("https://forms.gle/your-google-form-link", "_blank")}
-                >
-                  <FileText className="w-6 h-6" />
-                  <span>Fill Inquiry Form</span>
-                </Button>
+              
 
                 <div className="text-center pt-4">
                   <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Or Email</p>
