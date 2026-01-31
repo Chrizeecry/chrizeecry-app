@@ -805,7 +805,7 @@ export default function Page() {
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-center mb-4">
                   <div>
-                    <div className="text-2xl font-black text-gray-900 tracking-tighter">159</div>
+                    <div className="text-2xl font-black text-gray-900 tracking-tighter">169</div>
                     <div className="text-[10px] font-black uppercase text-gray-500">Subscribers</div>
                   </div>
                   <div>
@@ -1360,7 +1360,7 @@ export default function Page() {
                   <p className="text-4xl font-black my-3 text-amber-700">R129<span className="text-base font-medium">/month</span></p>
                   <p className="text-sm text-amber-800 mb-4">Lightweight. Essential. Immediate.</p>
                 </div>
-                <Button className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold shadow-lg hover:shadow-xl transform group-hover:-translate-y-1 transition-transform" onClick={() => window.open('#','_blank')}>
+                <Button className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold shadow-lg hover:shadow-xl transform group-hover:-translate-y-1 transition-transform" onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium",'_blank')}>
                   Get Started
                 </Button>
               </div>
@@ -1374,7 +1374,7 @@ export default function Page() {
                   <p className="text-4xl font-black my-3 text-[#8B4513]">R374<span className="text-base font-medium">/month</span></p>
                   <p className="text-sm text-gray-700 mb-4">Structured. Mentored. Unbeatable Value.</p>
                 </div>
-                <Button className="w-full bg-[#8B4513] text-white font-bold shadow-lg hover:shadow-xl transform group-hover:-translate-y-1 transition-transform" onClick={() => window.open('#','_blank')}>
+                <Button className="w-full bg-[#8B4513] text-white font-bold shadow-lg hover:shadow-xl transform group-hover:-translate-y-1 transition-transform" onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium",'_blank')}>
                   Join Cohort
                 </Button>
               </div>
