@@ -254,7 +254,7 @@ export default function Page() {
                   Meets Purpose
                 </h1>
                 <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl">
-                 A 4-year Honours Degree completed in 8 years. What started as a lonely journey became a masterclass in resilience. I am a Wits Civil Engineer bridging the gap between ACADEMIC FAILURE and S.T.E.M mastery for aspiring South African Civil Engineers
+                 A 4-year Honours Degree completed in 8 years. What started as a lonely journey became a masterclass in resilience. I am a Wits Civil Engineer bridging the gap between academic FAILURE and S.T.E.M Mastery for aspiring South African Civil Engineers
                 </p>
               </div>
 
