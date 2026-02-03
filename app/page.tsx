@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import PopupManager from "@/components/popup-manager"
+import ResidentEngineerTicker from "@/components/resident-engineer-ticker"
 import {
   ArrowRight,
   Star,
@@ -20,6 +22,7 @@ import {
   CheckCircle2,
   Minus,
   ChevronUp,
+  ChevronDown,
 } from "lucide-react"
 import Footer from "@/components/footer";
 import BlueprintHero from "@/components/blueprint-hero";
@@ -29,18 +32,14 @@ import CostOfInaction from "@/components/cost-of-inaction";
 export default function Page() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [showDiscountPopup, setShowDiscountPopup] = useState(false)
-  const [discountMinimized, setDiscountMinimized] = useState(false)
-  const [showCommunityPopup, setShowCommunityPopup] = useState(false)
-  const [communityMinimized, setCommunityMinimized] = useState(false)
-  const [showCookieConsent, setShowCookieConsent] = useState(false)
   const [selectedDivision, setSelectedDivision] = useState("")
+  const [showTopBanner, setShowTopBanner] = useState(false)
 
   useEffect(() => {
-    const consent = localStorage.getItem("cookie-consent")
-    if (!consent) {
-      const timer = setTimeout(() => setShowCookieConsent(true), 2000)
-      return () => clearTimeout(timer)
+    // Check if the top banner was previously dismissed
+    const bannerDismissed = localStorage.getItem("top-banner-dismissed")
+    if (!bannerDismissed) {
+      setShowTopBanner(true)
     }
   }, [])
   const [showLeadForm, setShowLeadForm] = useState(false)
@@ -54,6 +53,7 @@ export default function Page() {
 
   const [lastScrollY, setLastScrollY] = useState(0)
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const [showScrollBottom, setShowScrollBottom] = useState(true)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,17 +62,10 @@ export default function Page() {
       setShowScrollTop(currentScrollY > 400)
       
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
+      setShowScrollBottom(currentScrollY < scrollHeight - 400)
+
       if (scrollHeight > 0) {
         const scrollPercent = (currentScrollY / scrollHeight) * 100
-        
-        // Stagger popups
-        if (scrollPercent > 20 && scrollPercent < 45) {
-          setShowDiscountPopup(true)
-        } else if (scrollPercent >= 45) {
-          setShowCommunityPopup(true)
-          // Auto-minimize the discount if community shows up to save space
-          setDiscountMinimized(true)
-        }
       }
       setLastScrollY(currentScrollY)
     }
@@ -107,14 +100,36 @@ export default function Page() {
     setMobileNavOpen(false)
   }
 
+  const scrollToBottom = () => {
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" })
+    setMobileNavOpen(false)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-yellow-50">
       {/* Navigation */}
       <header
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+        className={`fixed top-0 w-full z-50 transition-all duration-500 flex flex-col ${
           scrolled ? "bg-white/80 backdrop-blur-md shadow-lg border-b border-amber-200" : "bg-transparent"
         }`}
       >
+        {showTopBanner && (
+          <div className="w-full bg-[#8B4513] text-white text-center py-2 px-8 shadow-md flex items-center justify-center relative z-[60]">
+            <p className="text-[10px] md:text-xs font-bold tracking-wide uppercase">
+               Get <span className="text-[#FFD700] animate-pulse">25% OFF</span> The Mastery Cohort <span className="hidden sm:inline">| Limited Time Offer</span> | Code: <span className="font-mono bg-white/20 px-1.5 py-0.5 rounded ml-1 text-[#FFD700]">CHRIS25</span>
+            </p>
+            <button 
+              onClick={() => {
+                setShowTopBanner(false)
+                localStorage.setItem("top-banner-dismissed", "true")
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-white/20 rounded-full transition-colors"
+            >
+              <X className="w-3 h-3 md:w-4 md:h-4" />
+            </button>
+          </div>
+        )}
+        <ResidentEngineerTicker />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3 group cursor-pointer" onClick={scrollToTop}>
@@ -144,6 +159,13 @@ export default function Page() {
               >
                 About
               </button>
+              <a
+                href="/studio"
+                className="text-gray-700 hover:text-[#FFD700] transition-all duration-300 font-bold px-2 py-1 hover:scale-105 flex items-center space-x-1"
+              >
+                <Music className="w-4 h-4" />
+                <span>The Studio</span>
+              </a>
               <Button
                 className="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black uppercase text-xs tracking-widest px-6 py-2.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 border-b-4 border-orange-700"
                 onClick={() => window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")}
@@ -206,6 +228,13 @@ export default function Page() {
               >
                 About Founder
               </button>
+              <a
+                href="/studio"
+                className="flex items-center space-x-3 text-gray-700 hover:text-[#FFD700] transition-colors w-full text-left py-3 min-h-[48px]"
+              >
+                <Music className="w-6 h-6" />
+                <span className="text-lg">The Studio</span>
+              </a>
               <button
                 onClick={() => scrollToSection("story")}
                 className="block text-gray-700 hover:text-[#FFD700] transition-colors w-full text-left py-3 min-h-[48px] text-lg"
@@ -3193,27 +3222,41 @@ export default function Page() {
                 "As a solopreneur focusing on the 'Big 4', I need partners to sponsor drawing tools, 
                 WiFi for kids in Lefatlheng, and books. Let's empower those bright minds."
               </p>
+              <Button 
+                className="mt-6 w-full bg-[#00457C] hover:bg-[#003057] text-white font-black uppercase py-6 rounded-xl shadow-lg flex items-center justify-center space-x-2"
+                onClick={() => window.open("https://www.paypal.com/paypalme/chrizeecry", "_blank")}
+              >
+                <span>💙 Donate / Sponsor via PayPal</span>
+              </Button>
             </CardContent>
           </Card>
         </div>
 
         <Card className="shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] border-none rounded-3xl overflow-hidden">
-          <div className="h-4 bg-gradient-to-r from-amber-400 to-orange-500"></div>
-          <CardContent className="p-10 md:p-12 space-y-8">
-            <h3 className="text-3xl font-black uppercase italic tracking-tighter">Direct Connection</h3>
-            <div className="space-y-6">
-              <p className="text-gray-600 font-medium italic">
-                "No complicated forms here. I'm a real person, and I want to help you or your child succeed. Choose how you'd like to connect below:"
-              </p>
-              
-              <div className="grid gap-4">
-                <Button 
-                  className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-black uppercase py-8 rounded-2xl transition-all shadow-xl text-lg tracking-widest flex items-center justify-center space-x-3"
-                  onClick={() => window.open("https://wa.me/27736043894?text=Hi%20Chris,%20I'm%20inquiring%20about...", "_blank")}
-                >
-                  <MessageCircle className="w-6 h-6" />
-                  <span>WhatsApp Me Directly</span>
-                </Button>
+  <div className="h-4 bg-gradient-to-r from-amber-400 to-orange-500"></div>
+  <CardContent className="p-10 md:p-12 space-y-8">
+    <h3 className="text-3xl font-black uppercase italic tracking-tighter">Direct Connection</h3>
+    <div className="space-y-6">
+      <p className="text-gray-600 font-medium italic">
+        "No complicated forms here. I'm a real person, and I want to help you or your child succeed. Choose how you'd like to connect below:"
+      </p>
+      
+      <div className="grid gap-4">
+        <Button 
+          className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-black uppercase py-4 md:py-8 rounded-2xl transition-all shadow-xl text-sm md:text-lg tracking-widest flex items-center justify-center space-x-3"
+          onClick={() => window.open("https://wa.me/27736043894?text=Hi%20Chris,%20I'm%20inquiring%20about...", "_blank")}
+        >
+          <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
+          <span>WhatsApp Me Directly</span>
+        </Button>
+        
+        <Button 
+          className="w-full bg-[#00457C] hover:bg-[#003057] text-white font-black uppercase py-4 md:py-8 rounded-2xl transition-all shadow-xl text-sm md:text-lg tracking-widest flex items-center justify-center space-x-3"
+          onClick={() => window.open("https://www.paypal.com/paypalme/chrizeecry", "_blank")}
+        >
+          <span>💙 Support the Vision (PayPal)</span>
+        </Button>
+     
 
               
 
@@ -3232,183 +3275,38 @@ export default function Page() {
 
 <Footer />
 
-{showDiscountPopup && (
-  <div className={`fixed bottom-10 right-5 md:right-10 z-[100] transition-all duration-500 ${discountMinimized ? 'w-auto' : 'max-w-sm w-full'}`}>
-    {discountMinimized ? (
-      <button
-        onClick={() => setDiscountMinimized(false)}
-        className="bg-orange-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all flex items-center space-x-2"
-      >
-        <Star className="w-6 h-6 fill-current" />
-        <span className="font-bold pr-2 text-sm">25% OFF</span>
-      </button>
-    ) : (
-      <div className="bg-white shadow-2xl border-2 border-orange-500 p-6 rounded-2xl transform animate-in slide-in-from-bottom-20">
-        <div className="flex justify-end space-x-2 absolute top-2 right-2">
-          <button 
-            onClick={() => setDiscountMinimized(true)} 
-            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
-            title="Minimize"
-          >
-            <Minus className="h-5 w-5" />
-          </button>
-          <button 
-            onClick={() => setShowDiscountPopup(false)} 
-            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-        <div className="flex items-center space-x-3 mb-4">
-          <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-            <Star className="w-6 h-6 text-orange-600 fill-current" />
-          </div>
-          <h3 className="text-xl font-bold text-gray-900">⏰ Limited Offer!</h3>
-        </div>
-        <p className="text-gray-600 mb-4 leading-relaxed">
-          Get <span className="font-bold text-orange-600 text-lg">25% OFF</span> the Mastery Cohort today.
-        </p>
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 text-center">
-          <span className="text-sm text-amber-800 font-medium">Use code:</span>
-          <div className="text-xl font-mono font-bold text-[#8B4513] tracking-wider mt-1 select-all">
-            CHRIS25
-          </div>
-        </div>
-        <Button 
-          className="w-full bg-black hover:bg-gray-800 text-white py-6 rounded-xl font-bold text-lg shadow-lg transition-transform hover:scale-[1.02]"
-          onClick={() => {
-            window.open("https://nas.io/chrizeecry-complete-collective-vault-premium", "_blank")
-            setShowDiscountPopup(false)
-          }}
-        >
-          Claim My Discount
-        </Button>
+<div className="fixed bottom-6 right-6 z-[120] flex flex-col items-center space-y-4">
+  {showScrollTop && (
+    <div className="flex flex-col items-center group">
+      <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity mb-2 animate-bounce">
+        <span className="text-xl">🚀</span>
       </div>
-    )}
-  </div>
-)}
-
-{showCommunityPopup && (
-  <div className={`fixed bottom-10 left-5 md:left-10 z-[100] transition-all duration-500 ${communityMinimized ? 'w-auto' : 'max-w-sm w-full'}`}>
-    {communityMinimized ? (
       <button
-        onClick={() => setCommunityMinimized(false)}
-        className="bg-[#8B4513] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all flex items-center space-x-2"
+        onClick={scrollToTop}
+        className="w-14 h-14 bg-[#8B4513] text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 hover:bg-[#6F370F] active:scale-95 border-2 border-amber-200"
+        aria-label="Scroll to top"
       >
-        <GraduationCap className="w-6 h-6" />
-        <span className="font-bold pr-2 text-sm">Study Vault</span>
+        <ChevronUp className="w-8 h-8 group-hover:-translate-y-1 transition-transform" />
       </button>
-    ) : (
-      <div className="bg-white shadow-2xl border-2 border-amber-400 p-6 rounded-2xl transform animate-in slide-in-from-bottom-20">
-        <div className="flex justify-end space-x-2 absolute top-2 right-2">
-          <button 
-            onClick={() => setCommunityMinimized(true)} 
-            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
-            title="Minimize"
-          >
-            <Minus className="h-5 w-5" />
-          </button>
-          <button 
-            onClick={() => setShowCommunityPopup(false)} 
-            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-        <div className="flex items-center space-x-3 mb-4">
-          <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
-            <GraduationCap className="w-6 h-6 text-amber-600" />
-          </div>
-          <h3 className="text-xl font-bold text-gray-900">🎁 Free Study Vault</h3>
-        </div>
-        <p className="text-gray-600 mb-4 leading-relaxed text-sm">
-          Download <span className="font-bold text-amber-700">Wits Handwritten Notes</span>, Grade 1-12 resources, and get exclusive freebies. 
-          Perfect for students, parents, and junior engineers.
-        </p>
-        <div className="space-y-2 mb-4">
-          <div className="flex items-start text-xs text-gray-500">
-            <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mr-2 mt-1 flex-shrink-0" />
-            <span>Calculus & Euclidean Geometry Guides (Technical Maths & Science)</span>
-          </div>
-          <div className="flex items-start text-xs text-gray-500">
-            <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mr-2 mt-1 flex-shrink-0" />
-            <span>Civil Engineering Consulting & Content Creation Skills</span>
-          </div>
-          <div className="flex items-start text-xs text-gray-500">
-            <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mr-2 mt-1 flex-shrink-0" />
-            <span>Unlock monetary skills even if you are shy or "not cool"</span>
-          </div>
-        </div>
-        <Button 
-          className="w-full bg-[#8B4513] hover:bg-[#6F370F] text-white py-6 rounded-xl font-bold text-lg shadow-lg transition-transform hover:scale-[1.02]"
-          onClick={() => {
-            window.open("https://collective.chrizeecry.com/meet-and-great-the-community", "_blank")
-            setShowCommunityPopup(false)
-          }}
-        >
-          Access Free Vault
-        </Button>
-      </div>
-    )}
-  </div>
-)}
-
-{showScrollTop && (
-  <div className="fixed bottom-10 right-8 z-[90] flex flex-col items-center group">
-    <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity mb-2 animate-bounce">
-      <span className="text-xl">🚀</span>
-      <span className="text-xl">📐</span>
-      <span className="text-xl">🏗️</span>
     </div>
-    <button
-      onClick={scrollToTop}
-      className="w-14 h-14 bg-[#8B4513] text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 hover:bg-[#6F370F] active:scale-95 border-2 border-amber-200"
-      aria-label="Scroll to top"
-    >
-      <ChevronUp className="w-8 h-8 group-hover:-translate-y-1 transition-transform" />
-    </button>
-  </div>
-)}
-
-{showCookieConsent && (
-  <div className="fixed bottom-0 left-0 right-0 z-[200] p-4 animate-in fade-in slide-in-from-bottom-10 duration-700">
-    <div className="max-w-4xl mx-auto bg-slate-900/95 backdrop-blur-md text-white p-6 rounded-2xl shadow-2xl border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div className="flex items-center space-x-4">
-        <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-          <span className="text-2xl">🍪</span>
-        </div>
-        <div>
-          <h4 className="font-bold text-lg">Your Privacy & Growth</h4>
-          <p className="text-sm text-slate-400 leading-relaxed">
-            We use cookies to optimize your learning journey and improve our collective experience. 
-            By staying, you agree to our <a href="/policies" className="text-amber-400 hover:underline">Privacy Policy</a>.
-          </p>
-        </div>
-      </div>
-      <div className="flex items-center space-x-3 w-full md:w-auto">
-        <Button 
-          variant="outline" 
-          className="flex-1 md:flex-none border-slate-500 hover:bg-slate-800 hover:border-amber-500 text-white transition-all"
-          onClick={() => {
-            localStorage.setItem("cookie-consent", "declined")
-            setShowCookieConsent(false)
-          }}
-        >
-          Decline
-        </Button>
-        <Button 
-          className="flex-1 md:flex-none bg-gradient-to-r from-amber-500 to-orange-500 hover:from-orange-500 hover:to-amber-500 text-white font-bold px-8"
-          onClick={() => {
-            localStorage.setItem("cookie-consent", "accepted")
-            setShowCookieConsent(false)
-          }}
-        >
-          Accept
-        </Button>
+  )}
+  
+  {showScrollBottom && (
+    <div className="flex flex-col items-center group">
+      <button
+        onClick={scrollToBottom}
+        className="w-14 h-14 bg-[#8B4513] text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 hover:bg-[#6F370F] active:scale-95 border-2 border-amber-200"
+        aria-label="Scroll to bottom"
+      >
+        <ChevronDown className="w-8 h-8 group-hover:translate-y-1 transition-transform" />
+      </button>
+      <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity mt-2 animate-bounce">
+        <span className="text-xl">⚓</span>
       </div>
     </div>
-  </div>
-)}
+  )}
 </div>
-)
+      <PopupManager />
+    </div>
+  )
 }

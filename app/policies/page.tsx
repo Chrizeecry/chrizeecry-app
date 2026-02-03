@@ -29,8 +29,7 @@ export default function PoliciesPage() {
       <h2 className="text-2xl font-bold mt-8 mb-2">5. Payments and Billing</h2>
       <p>All prices are in ZAR (South African Rand) unless stated otherwise. Payments are processed through third-party services. Chrizeecry does not store your payment details.</p>
       <h2 className="text-2xl font-bold mt-8 mb-2">6. Refund Policy</h2>
-      <p>We offer a 7-day money-back guarantee on digital memberships. If you’re unsatisfied, contact us within 7 days of your subscription purchase at <a href="mailto:chrizeecry@gmail.com" className="text-blue-600 underline">chrizeecry@gmail.com</a>. After this period, no refunds will be issued unless required by South African law.</p>
-      <p>Beat purchases, FL Studio templates, and sample packs are non-refundable due to the nature of digital goods.</p>
+      <p>All sales are final. We do not offer refunds on digital memberships, products, beats, templates, or sample packs once access has been granted, unless required by South African law. By purchasing, you acknowledge that you are buying non-tangible, irrevocable digital goods.</p>
       <h2 className="text-2xl font-bold mt-8 mb-2">7. User Conduct</h2>
       <p>You agree not to:</p>
       <ul className="list-disc ml-6">
